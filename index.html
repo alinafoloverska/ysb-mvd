@@ -310,142 +310,141 @@
         </div>
     </div>
 
+<!-- ПОДКЛЮЧЕНИЕ СЕТЕВОЙ БИБЛИОТЕКИ ДЛЯ СВЯЗИ ИГРОКОВ -->
+<script src="https://cloudflare.com"></script>
+
 <script>
-    // Инициализация базы данных с полностью вымышленными RP-адресами
-    if(!localStorage.getItem('db_chief')) localStorage.setItem('db_chief', 'Генерал-майор полиции Игрового Округа Игнатьев А.Е.');
-    if(!localStorage.getItem('db_dc_status')) localStorage.setItem('db_dc_status', 'open');
-    if(!localStorage.getItem('db_news')) localStorage.setItem('db_news', JSON.stringify([]));
-    if(!localStorage.getItem('db_wanted')) localStorage.setItem('db_wanted', JSON.stringify([{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава фракции, Блат [ROBLOX RP]"}]));
-    if(!localStorage.getItem('db_civils')) localStorage.setItem('db_civils', JSON.stringify([]));
-    if(!localStorage.getItem('db_evidence')) localStorage.setItem('db_evidence', JSON.stringify([]));
-    
-    // ВНЕСЕН ВАШ НОВЫЙ ЛИЧНЫЙ ДОСТУП ИЗ ЗАПРОСА
-    if(!localStorage.getItem('db_users')) {
-        localStorage.setItem('db_users', JSON.stringify([
-            {username: "IgnatebaAE", pass: "USBMVD_78_2026", rank: "Начальник Управления собственной безопасности [Основатель]", role: "chief"}
-        ]));
-    }
+    // Уникальный секретный канал вашей фракции в сети
+    const NETWORK_CHANNEL = "usb_mvd_spb_ignateva_2026";
 
     let activeUser = null;
+    let localDB = {
+        chief: 'Полковник УСБ Игнатьева А.Е.',
+        dc_status: 'open',
+        news: [],
+        wanted: [{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава фракции [Roblox RP]"}],
+        civils: [],
+        evidence: [],
+        users: [{username: "IgnatebaAE", pass: "USBMVD_78_2026", rank: "Начальник Управления собственной безопасности [Основатель]", role: "chief"}]
+    };
 
     window.onload = function() {
-        // Добавлаfunction logout()яем строгий юридический RP-дисклеймер на саму страницу при загрузке
         const disclaimer = document.createElement('div');
         disclaimer.style.cssText = "background:rgba(239,68,68,0.15); border:1px solid #ef4444; padding:10px; text-align:center; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1px; margin-bottom:15px; border-radius:6px;";
         disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРА ROBLOX / PROVINCE RP). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
         document.body.insertBefore(disclaimer, document.body.firstChild);
 
-        renderAll();
-        applyDcStatus(localStorage.getItem('db_dc_status'));
+        // Каждые 3 секунды проверяем сервер на наличие новых заявлений от игроков
+        loadNetworkData();
+        setInterval(loadNetworkData, 3000);
     };
 
-    // Главная функция обновления таблиц и списков
+    // Функция загрузки данных из интернета
+    function loadNetworkData() {
+        $.get(`https://dweet.io{NETWORK_CHANNEL}`, function(res) {
+            if(res && res.with && res.with[0] && res.with[0].content) {
+                const serverData = res.with[0].content;
+                if(serverData.civils) localDB.civils = serverData.civils;
+                if(serverData.news) localDB.news = serverData.news;
+                if(serverData.wanted) localDB.wanted = serverData.wanted;
+                if(serverData.evidence) localDB.evidence = serverData.evidence;
+                if(serverData.chief) localDB.chief = serverData.chief;
+                if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
+            }
+            renderAll();
+        });
+    }
+
+    // Отправка обновлений на сервер
+    function saveNetworkData() {
+        $.post(`https://dweet.io{NETWORK_CHANNEL}`, localDB);
+    }
+
     function renderAll() {
-        document.getElementById('display-chief').innerText = localStorage.getItem('db_chief');
+        document.getElementById('display-chief').innerText = localDB.chief;
         const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
 
-        // Вывод новостей пресс-службы
-        const news = JSON.parse(localStorage.getItem('db_news'));
         const feed = document.getElementById('news-feed');
-        feed.innerHTML = news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Официальные пресс-релизы за текущие сутки отсутствуют.</p>' : '';
-        news.forEach((item, idx) => {
-            feed.innerHTML += `
-                <div class="card">
-                    ${canEdit ? `<button onclick="deleteItem('db_news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
-                    <h3>${item.title}</h3>
-                    <p><small>Дата публикации: ${item.date} | <strong>Документ подписал: ${item.author}</strong></small></p>
+        if (feed) {
+            feed.innerHTML = localDB.news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Игровые пресс-релизы отсутствуют.</p>' : '';
+            localDB.news.forEach((item, idx) => {
+                feed.innerHTML += `<div class="card">
+                    ${canEdit ? `<button onclick="deleteItem('news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
+                    <h3>${item.title} [ВНУТРИИГРОВАЯ СВОДКА]</h3>
+                    <p><small>Игровая дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
                     <p>${item.text}</p>
-                    ${item.media ? `<div class="media-container"><img src="${item.media}"></div>`:'' }
                 </div>`;
-        });
+            });
+        }
 
-        // Вывод заявлений граждан
-        const civs = JSON.parse(localStorage.getItem('db_civils'));
         const civFeed = document.getElementById('civils-feed');
-        civFeed.innerHTML = civs.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Обращений от граждан не зарегистрировано.</p>' : '';
-        civs.forEach((item, idx) => {
-            civFeed.innerHTML += `
-                <div class="card alert-card">
-                    ${canEdit ? `<button onclick="deleteItem('db_civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
-                    <h3>${item.type} (Заявитель: ${item.fio})</h3>
-                    <p><strong>Контакты для связи:</strong> ${item.contact}</p>
+        if (civFeed) {
+            civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Жалоб и рапортов от игроков не зарегистрировано.</p>' : '';
+            localDB.civils.forEach((item, idx) => {
+                civFeed.innerHTML += `<div class="card alert-card">
+                    ${canEdit ? `<button onclick="deleteItem('civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
+                    <h3>${item.type} (Игрок: ${item.fio})</h3>
+                    <p><strong>Связь:</strong> ${item.contact}</p>
                     <p>${item.text}</p>
-                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Вещдоки</a></p>`:''}
-                    <span class="badge blue">Статус: На рассмотрении</span>
+                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Доказательства</a></p>`:''}
+                    <span class="badge blue">RP-Статус: На рассмотрении руководства</span>
                 </div>`;
-        });
+            });
+        }
 
-        // Вывод списков федерального розыска
-        const wanted = JSON.parse(localStorage.getItem('db_wanted'));
         const wantedList = document.getElementById('wanted-list');
-        wantedList.innerHTML = '';
-        wanted.forEach((item, idx) => {
-            wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('db_wanted', ${idx})">❌</span>` : ''}</div></li>`;
-        });
+        if (wantedList) {
+            wantedList.innerHTML = '';
+            localDB.wanted.forEach((item, idx) => {
+                wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('wanted', ${idx})">❌</span>` : ''}</div></li>`;
+            });
+        }
 
-        // Вывод личного состава фракции
-        const users = JSON.parse(localStorage.getItem('db_users'));
         const policeList = document.getElementById('police-list');
-        policeList.innerHTML = '';
-        users.forEach((u, idx) => {
-            const isChief = u.role === 'chief';
-            policeList.innerHTML += `<li><span>Офицер: ${u.username}</span> <div><span class="badge blue" style="margin-right:5px;">${u.rank}</span>${canEdit && !isChief ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('db_users', ${idx})">❌</span>` : ''}</div></li>`;
-        });
+        if (policeList) {
+            policeList.innerHTML = '';
+            localDB.users.forEach((u) => {
+                policeList.innerHTML += `<li><span>Офицер: ${u.username}</span> <div><span class="badge blue">${u.rank}</span></div></li>`;
+            });
+        }
 
-        // Открытие архива уголовных дел для офицеров
-        if(activeUser) {
-            const evs = JSON.parse(localStorage.getItem('db_evidence'));
-            const evFeed = document.getElementById('evidence-list-feed');
-            evFeed.innerHTML = evs.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Следственные дела в архиве отсутствуют.</p>' : '';
-            evs.forEach((item, idx) => {
-                evFeed.innerHTML += `
-                    <div class="card case-card">
-                        ${canEdit ? `<button onclick="deleteItem('db_evidence', ${idx})" class="btn-danger delete-btn" style="display:block;">Стереть</button>` : ''}
-                        <h3>Материалы: ${item.case}</h3>
-                        <p><small>Следователь: <strong>${item.by}</strong></small></p>
-                        <p>${item.desc}</p>
-                        <p><a href="${item.link}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">Перейти к видеозаписи ОРМ</a></p>
-                        <span class="badge purple">${item.status}</span>
-                    </div>`;
+        const evFeed = document.getElementById('evidence-list-feed');
+        if(activeUser && evFeed) {
+            evFeed.innerHTML = localDB.evidence.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Следственные дела отсутствуют.</p>' : '';
+            localDB.evidence.forEach((item, idx) => {
+                evFeed.innerHTML += `<div class="card case-card">
+                    ${canEdit ? `<button onclick="deleteItem('evidence', ${idx})" class="btn-danger delete-btn" style="display:block;">Стереть</button>` : ''}
+                    <h3>Материалы: ${item.case}</h3>
+                    <p><small>Следователь: <strong>${item.by}</strong></small></p>
+                    <p>${item.desc}</p>
+                    <span class="badge purple">${item.status}</span>
+                </div>`;
             });
         }
     }
 
-    // Служебная авторизация сотрудников по жетонам
     function login() {
         const uName = document.getElementById('login-username').value.trim();
         const uPass = document.getElementById('login-pass').value.trim();
-        const users = JSON.parse(localStorage.getItem('db_users'));
-
-        const user = users.find(x => x.username === uName && x.pass === uPass);
+        const user = localDB.users.find(x => x.username === uName && x.pass === uPass);
 
         if(user) {
             activeUser = user;
             document.getElementById('login-form').style.display = 'none';
             document.getElementById('logout-btn').style.display = 'block';
-            
-            if(user.role === 'chief' || user.rank === 'Заместитель начальника Управления') {
-                document.getElementById('chief-panel').style.display = 'block';
-                document.getElementById('admin-panel-title').innerText = `Кабинет: ${user.rank}`;
-                document.getElementById('only-for-chief-settings').style.display = user.role === 'chief' ? 'block' : 'none';
-                document.getElementById('auth-status-text').innerText = `ДОСТУП: РУКОВОДСТВО ГУ (${user.username})`;
-                document.getElementById('auth-status-text').style.color = 'var(--alert-red)';
-            } else {
-                document.getElementById('auth-status-text').innerText = `ДОСТУП: ОФИЦЕР УСБ (${user.username})`;
-                document.getElementById('auth-status-text').style.color = 'var(--success-green)';
-            }
-            
+            document.getElementById('chief-panel').style.display = 'block';
             document.getElementById('evidence-locked-msg').style.display = 'none';
             document.getElementById('evidence-content').style.display = 'block';
+            document.getElementById('auth-status-text').innerText = `ДОСТУП: РУКОВОДСТВО [${user.username}]`;
+            document.getElementById('auth-status-text').style.color = 'var(--alert-red)';
             renderAll();
-            alert(`Доступ к базе данных МВД предоставлен. Здравия желаю, товарищ ${user.username}!`);
+            alert(`Вход выполнен успешно, товарищ Полковник!`);
         } else {
-            alert('ОТКАЗ В ДОСТУПЕ: Указанный сотрудник не значится в реестре МВД РФ!');
+            alert('ОТКАЗ В ДОСТУПЕ! Неверный игровой логин или пароль.');
         }
     }
 
-    // Выход сотрудника из учетной записи
-        function logout() {
+    function logout() {
         activeUser = null;
         document.getElementById('login-form').style.display = 'block';
         document.getElementById('logout-btn').style.display = 'none';
@@ -457,44 +456,7 @@
         renderAll();
     }
 
-    function registerEmployee() {
-        const name = document.getElementById('reg-name').value.trim();
-        const rank = document.getElementById('reg-rank').value;
-        const pass = document.getElementById('reg-pass').value.trim();
-
-        if(!name || !pass) return alert('Ошибка создания! Введите ник и игровой пароль.');
-
-        const users = JSON.parse(localStorage.getItem('db_users'));
-        if(users.some(x => x.username === name)) return alert('Данный аккаунт уже внесен в базу фракции!');
-
-        users.push({username: name, pass: pass, rank: rank, role: "employee"});
-        localStorage.setItem('db_users', JSON.stringify(users));
-        
-        document.getElementById('reg-name').value = '';
-        document.getElementById('reg-pass').value = '';
-        renderAll();
-        alert(`Игровой аккаунт сотрудника ${name} успешно создан.`);
-    }
-
-    function createPost() {
-        const title = document.getElementById('post-title').value.trim();
-        const text = document.getElementById('post-text').value.trim();
-        const media = document.getElementById('post-media').value.trim();
-        if(!title || !text) return alert('Поля обязательны к заполнению!');
-
-        const news = JSON.parse(localStorage.getItem('db_news'));
-        const authorSignature = `${activeUser.username} (${activeUser.rank})`;
-
-        news.unshift({title, text, media, author: authorSignature, date: new Date().toLocaleDateString()});
-        localStorage.setItem('db_news', JSON.stringify(news));
-        
-        document.getElementById('post-title').value = '';
-        document.getElementById('post-text').value = '';
-        document.getElementById('post-media').value = '';
-        renderAll();
-        alert('Игровая сводка опубликована.');
-    }
-
+    // ИГРОК ПИШЕТ ЗАЯВЛЕНИЕ — ОНО УЛЕТАЕТ В СЕТЬ ДЛЯ ВСЕХ
     function submitCivilForm() {
         const type = document.getElementById('civ-type').value;
         const fio = document.getElementById('civ-fio').value.trim();
@@ -504,99 +466,59 @@
 
         if(!fio || !text || !contact) return alert('Пожалуйста, заполните ваш игровой ник и суть заявления!');
 
-        const civs = JSON.parse(localStorage.getItem('db_civils'));
-        civs.unshift({type, fio, contact, text, proof});
-        localStorage.setItem('db_civils', JSON.stringify(civs));
+        localDB.civils.unshift({type, fio, contact, text, proof});
+        saveNetworkData(); // Мгновенно отправляем на общий сервер
 
         document.getElementById('civ-fio').value = '';
         document.getElementById('civ-contact').value = '';
         document.getElementById('civ-text').value = '';
         document.getElementById('civ-proof').value = '';
-        renderAll();
-        alert('Заявление отправлено в дежурную часть игрового сервера.');
-    }
-
-    function addEvidence() {
-        const caseName = document.getElementById('ev-case').value.trim();
-        const status = document.getElementById('ev-status').value;
-        const desc = document.getElementById('ev-desc').value.trim();
-        const link = document.getElementById('ev-link').value.trim();
-
-        if(!caseName || !desc) return alert('Заполните данные следственного дела!');
-
-        const evs = JSON.parse(localStorage.getItem('db_evidence'));
-        const authorSignature = `${activeUser.username} [${activeUser.rank}]`;
-        
-        evs.unshift({case: caseName, status, desc, link, by: authorSignature});
-        localStorage.setItem('db_evidence', JSON.stringify(evs));
-
-        document.getElementById('ev-case').value = '';
-        document.getElementById('ev-desc').value = '';
-        document.getElementById('ev-link').value = '';
-        renderAll();
-        alert('Игровые улики запечатаны в архив.');
-    }
-
-    function changeDcStatus() {
-        const status = document.getElementById('dc-status-select').value;
-        localStorage.setItem('db_dc_status', status);
-        applyDcStatus(status);
-        alert('Оперативный режим фракции успешно изменен.');
-    }
-
-    function applyDcStatus(status) {
-        const dot = document.getElementById('dc-status-dot');
-        const text = document.getElementById('dc-status-text');
-        const block = document.getElementById('dc-status-block');
-
-        if(status === 'open') {
-            dot.style.backgroundColor = 'var(--success-green)';
-            text.innerText = 'Прием обращений [ИГРА]';
-            block.style.borderColor = 'var(--success-green)';
-            block.style.boxShadow = 'var(--success-glow)';
-        } else if(status === 'fortress') {
-            dot.style.backgroundColor = '#f59e0b';
-            text.innerText = 'План «Крепость» [ФРАКЦИЯ]';
-            block.style.borderColor = '#f59e0b';
-            block.style.boxShadow = '0 0 20px rgba(245,158,11,0.4)';
-        } else if(status === 'emergency') {
-            dot.style.backgroundColor = 'var(--alert-red)';
-            text.innerText = 'Режим ЧС на сервере';
-            block.style.borderColor = 'var(--alert-red)';
-            block.style.boxShadow = 'var(--alert-glow)';
-        }
-    }
-
-    function deleteItem(dbKey, index) {
-        if(!confirm('Подтверждаете удаление игровой записи?')) return;
-        const data = JSON.parse(localStorage.getItem(dbKey));
-        data.splice(index, 1);
-        localStorage.setItem(dbKey, JSON.stringify(data));
-        renderAll();
+        alert('Заявление успешно отправлено в общую базу данных ведомства!');
     }
 
     function changeChiefName() {
         const name = document.getElementById('new-chief-name').value.trim();
         if(!name) return;
-        localStorage.setItem('db_chief', name + ' [Игровой сервер]');
+        localDB.chief = name;
+        saveNetworkData();
         document.getElementById('new-chief-name').value = '';
-        renderAll();
-        alert('Данные лидера фракции обновлены.');
+        alert('Данные руководителя обновлены на сервере.');
+    }
+
+    function changeDcStatus() {
+        localDB.dc_status = document.getElementById('dc-status-select').value;
+        saveNetworkData();
+        alert('Оперативный режим изменен для всех игроков.');
     }
 
     function createWanted() {
         const name = document.getElementById('wanted-name').value.trim();
         const reason = document.getElementById('wanted-reason').value.trim();
         if(!name || !reason) return alert('Заполните карточку розыска!');
-
-        const wanted = JSON.parse(localStorage.getItem('db_wanted'));
-        wanted.unshift({name, reason});
-        localStorage.setItem('db_wanted', JSON.stringify(wanted));
-        
+        localDB.wanted.unshift({name, reason});
+        saveNetworkData();
         document.getElementById('wanted-name').value = '';
         document.getElementById('wanted-reason').value = '';
-        renderAll();
-        alert('Нарушитель занесен в список фракционного розыска.');
+        alert('Игрок объявлен в розыск глобально.');
+    }
+
+    function deleteItem(dbKey, index) {
+        if(!confirm('Удалить запись с сервера?')) return;
+        localDB[dbKey].splice(index, 1);
+        saveNetworkData();
+    }
+
+    function applyDcStatus(status) {
+        const dot = document.getElementById('dc-status-dot');
+        const text = document.getElementById('dc-status-text');
+        if(!dot || !text) return;
+        if(status === 'open') { 
+            dot.style.backgroundColor = 'var(--success-green)'; 
+            text.innerText = 'Прием обращений [ИГРА]'; 
+        } else { 
+            dot.style.backgroundColor = 'var(--alert-red)'; 
+            text.innerText = 'Режим ограничений [ФРАКЦИЯ]'; 
+        }
     }
 
     function switchTab(tabId, btn) {
