@@ -611,40 +611,5 @@
         panel.style.display = panel.style.display === 'grid' ? 'none' : 'grid';
     }
 </script>
-
-    // ... тут заканчиваются старые функции сайта ...
-
-    // === НОВЫЙ БЛОК: ИНТЕРАКТИВНЫЙ ГЕНЕРАТОР RP-СИТУАЦИЙ ===
-    function generateRpCall() {
-        const locations = ["Приморский RP-округ, сектор А-3", "Невский игровой сектор, у здания ГИБДД", "Линейный переулок, район автоярмарки", "Центральный район, парковка у мэрии"];
-        const situations = ["Попытка дачи взятки должностному лицу (ст. 291 УК РФ)", "Превышение должностных полномочий сотрудником полиции (ст. 286 УК РФ)", "Подозрение на блат и халатность при досмотре транспорта", "Продажа служебного оружия и патронов на черном рынке"];
-        const codes = ["КОД-1 (Срочно)", "КОД-2 (Обычный выезд)", "КОД-3 (Скрытое наблюдение)"];
-        const randomLoc = locations[Math.floor(Math.random() * locations.length)];
-        const randomSit = situations[Math.floor(Math.random() * situations.length)];
-        const randomCode = codes[Math.floor(Math.random() * codes.length)];
-        alert(`🚨 СЛУЖЕБНАЯ ОРИЕНТИРОВКА:\n\nРежим: ${randomCode}\nЛокация: ${randomLoc}\nФабула: ${randomSit}\n\nВышлите оперативников УСБ для проверки!`);
-    }
-
-    function logDutyShift() {
-        if (!activeUser) { return alert("Ошибка: Для фиксации смены необходимо авторизоваться в Дежурной части!"); }
-        const time = new Date().toLocaleTimeString();
-        alert(`[ФИКСАЦИЯ ДЧ]: Офицер ${activeUser.username} успешно заступил на боевое дежурство по округу. Время: ${time}.`);
-    }
-
-    // Автоматическая вставка кнопок внутрь панели
-    setInterval(function() {
-        const targetPanel = document.getElementById('chief-panel');
-        if (targetPanel && !document.getElementById('rp-speed-tools')) {
-            const toolsDiv = document.createElement('div');
-            toolsDiv.id = 'rp-speed-tools';
-            toolsDiv.innerHTML = `
-                <h4>Оперативные RP-инструменты</h4>
-                <button onclick="logDutyShift()" style="background: linear-gradient(90deg, #1e293b 0%, #334155 100%); margin-bottom: 5px;">🔒 Зафиксировать заступление на смену</button>
-                <button onclick="generateRpCall()" style="background: linear-gradient(90deg, #a855f7 0%, #7e22ce 100%);">🎲 Сгенерировать случайную RP-ситуацию</button>
-            `;
-            targetPanel.appendChild(toolsDiv);
-        }
-    }, 1000);
-</script>
 </body>
 </html>
