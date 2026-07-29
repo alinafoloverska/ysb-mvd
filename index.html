@@ -240,7 +240,7 @@
         </div>
     </div>
 
-    <!-- ПРАВАЯ БОКОВАЯ КОЛОНКА -->
+        <!-- ПРАВАЯ БОКОВАЯ КОЛОНКА С СИСТЕМНОЙ ЗАЩИТОЙ ДОСТУПА -->
     <div class="sidebar">
         <div class="panel">
             <h2>Дежурная Часть / Доступ</h2>
@@ -254,12 +254,13 @@
             <button id="logout-btn" class="btn-danger" style="display:none;" onclick="logout()">Завершить смену (Выход)</button>
         </div>
 
-        <div class="panel hidden-panel" id="chief-panel">
+        <!-- СИТУАЦИОННЫЙ ЦЕНТР: ЗАБЛОКИРОВАН И СКРЫТ ОТ ГРАЖДАНСКИХ ЛИЦ -->
+        <div class="panel hidden-panel" id="chief-panel" style="display: none;">
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
             
             <h4>Управление режимом Дежурной Части</h4>
             <select id="dc-status-select" onchange="changeDcStatus()">
-                <option value="open">🟢 Прием обращений открыт (Штатный режим)</option>
+                <option value="open">🟢 Прием обращений открыт (Штатный regime)</option>
                 <option value="fortress">🟡 Введен план «Крепость» (Доступ ограничен)</option>
                 <option value="emergency">🔴 Объявлен режим ЧС (Секретно)</option>
             </select>
@@ -288,7 +289,7 @@
             <h4>Выпустить официальный пресс-релиз</h4>
             <input type="text" id="post-title" placeholder="Тема/Заголовок пресс-релиза">
             <textarea id="post-text" placeholder="Текст официального заявления..."></textarea>
-            <input type="text" id="post-media" placeholder="Ссылка на фото/доказательства">
+            <input type="text" id="post-media" placeholder="Ссылка на photo/доказательства">
             <button onclick="createPost()">Опубликовать от имени ГУ</button>
 
             <h4>Внести в Федеральный Розыск</h4>
@@ -307,7 +308,6 @@
             <ul class="database-list" id="police-list"></ul>
         </div>
     </div>
-</div>
 
 <script>
     // Инициализация базы данных с полностью вымышленными RP-адресами
