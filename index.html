@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главное управление собственной безопасности | ГУ МВД России</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
+            --glass-bg: rgba(15, 23, 42, 0.75);
+            --glass-border: rgba(59, 130, 246, 0.2);
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --neon-blue: 0 0 20px rgba(59, 130, 246, 0.4);
+            --alert-red: #ef4444;
+            --alert-glow: 0 0 20px rgba(239, 68, 68, 0.5);
+            --success-green: #10b981;
+            --success-glow: 0 0 20px rgba(16, 185, 129, 0.4);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-main);
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
+            border-bottom: 2px solid var(--accent-blue);
+            box-shadow: var(--neon-blue);
+            padding: 35px 20px; text-align: center;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+        .mvd-logo {
+            width: 95px; height: auto; margin-bottom: 12px;
+            filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
+        }
+        header h1 { margin: 5px 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        header p { margin: 5px 0; color: var(--text-muted); font-size: 14px; font-weight: 400; letter-spacing: 1px; }
+        
+        .chief-badge {
+            background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent-blue);
+            display: inline-block; padding: 8px 20px; border-radius: 30px; margin-top: 15px; font-size: 13px;
+        }
+
+        .status-ticker {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.4); border: 1px solid var(--success-green);
+            padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: bold;
+            display: flex; align-items: center; gap: 8px; box-shadow: var(--success-glow);
+        }
+        .status-dot { width: 8px; height: 8px; background: var(--success-green); border-radius: 50%; }
+
+        nav {
+            background: rgba(2, 6, 23, 0.8); padding: 12px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .nav-btn {
+            background: rgba(59, 130, 246, 0.05); border: 1px solid var(--glass-border); color: var(--text-main);
+            padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .nav-btn:hover, .nav-btn.active { 
+            background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%); 
+            box-shadow: var(--neon-blue); border-color: #60a5fa;
+        }
+
+        .container { display: flex; max-width: 1500px; margin: 25px auto; padding: 0 20px; gap: 25px; }
+        .main-content { flex: 2.5; display: flex; flex-direction: column; gap: 25px; }
+        .sidebar { flex: 1.1; display: flex; flex-direction: column; gap: 25px; }
+
+        .panel {
+            background: var(--glass-bg); backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); border-radius: 12px; padding: 22px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .panel h2 { margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 2px solid var(--accent-blue); padding-bottom: 8px; letter-spacing: 1.5px; font-weight: 700; color: #fff; }
+        
+        .laws-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 5px; }
+        .law-card { background: rgba(2, 6, 23, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; text-align: center; font-size: 13px; }
+        .law-card a { color: var(--accent-cyan); text-decoration: none; font-weight: bold; display: block; margin-top: 6px; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .card {
+            background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05);
+            border-left: 5px solid var(--accent-blue); padding: 20px; border-radius: 8px; margin-bottom: 18px; position: relative;
+        }
+        .card.alert-card { border-left-color: var(--alert-red); background: rgba(220, 38, 38, 0.05); }
+        .card.case-card { border-left-color: #a855f7; }
+        
+        .media-container { margin-top: 15px; border-radius: 6px; overflow: hidden; background: #020617; border: 1px solid rgba(255,255,255,0.1); }
+        .media-container img { max-width: 100%; max-height: 400px; display: block; margin: 0 auto; }
+
+        input, textarea, select, button {
+            width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
+            background: rgba(2, 6, 23, 0.7); border: 1px solid var(--glass-border); color: #fff; border-radius: 6px; font-size: 13px;
+        }
+        button { background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%); border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        button:hover { filter: brightness(1.1); box-shadow: var(--neon-blue); }
+        .btn-danger { background: linear-gradient(90deg, var(--alert-red) 0%, #b91c1c 100%); }
+
+        .delete-btn {
+            position: absolute; top: 15px; right: 15px; background: rgba(239, 68, 68, 0.1);
+            color: var(--alert-red); border: 1px solid var(--alert-red); border-radius: 4px;
+            padding: 4px 10px; font-size: 11px; width: auto; margin: 0; cursor: pointer; display: none;
+        }
+
+        .auth-status { background: rgba(2, 6, 23, 0.5); padding: 10px; border-radius: 6px; text-align: center; font-size: 13px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .database-list { list-style: none; padding: 0; margin: 0; }
+        .database-list li { background: rgba(2, 6, 23, 0.3); padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; margin-bottom: 4px; }
+        
+        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+        .badge.red { background: rgba(239,68,68,0.2); color: var(--alert-red); border: 1px solid var(--alert-red); }
+        .badge.green { background: rgba(16,185,129,0.2); color: var(--success-green); border: 1px solid var(--success-green); }
+        .badge.blue { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid var(--accent-blue); }
+        .badge.purple { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #a855f7; }
+
+        .list-actions { display: flex; gap: 8px; align-items: center; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .info-box { background: rgba(2,6,23,0.4); padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); }
+        .info-box h4 { margin: 0 0 5px 0; color: #fff; font-size: 14px; }
+        .info-box p { margin: 0; font-size: 12px; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="status-ticker" id="dc-status-block">
+        <div class="status-dot" id="dc-status-dot"></div>
+        <span id="dc-status-text">Прием обращений открыт</span>
+    </div>
+
+    <img class="mvd-logo" src="https://postimg.cc" alt="Герб МВД России">
+    <h1>Главное управление собственной безопасности</h1>
+    <p>Официальный интерактивный портал • ГУ МВД России по г. Санкт-Петербургу и Ленинградской области</p>
+    <div class="chief-badge">Руководитель ГУ УСБ: <strong id="display-chief">Загрузка информации...</strong></div>
+</header>
+
+<nav>
+    <button class="nav-btn active" onclick="switchTab('tab-press', this)">📰 Пресс-служба и СМИ</button>
+    <button class="nav-btn" onclick="switchTab('tab-civilians', this)">⚖️ Приемная (Подать заявление)</button>
+    <button class="nav-btn" onclick="switchTab('tab-evidence', this)">📁 Дела и Улики (Для сотрудников)</button>
+    <button class="nav-btn" onclick="toggleLaws()">📚 Нормативно-правовая база</button>
+</nav>
+
+<div class="container">
+    
+    <div class="main-content">
+        <div class="panel laws-grid" id="laws-panel">
+            <div class="law-card"><h3>ФЗ №3 «О полиции»</h3><p>Регламент работы и права</p><a href="https://consultant.ru" target="_blank">КонсультантПлюс</a></div>
+            <div class="law-card"><h3>УК РФ (Глава 30)</h3><p>Должностные преступления</p><a href="https://consultant.ru" target="_blank">КонсультантПлюс</a></div>
+            <div class="law-card"><h3>КоАП РФ</h3><p>Административные статьи</p><a href="https://consultant.ru" target="_blank">КонсультантПлюс</a></div>
+        </div>
+
+        <!-- ВКЛАДКА 1 -->
+        <div id="tab-press" class="tab-content active">
+            <div class="panel">
+                <h2>Официальные пресс-релизы и хроника</h2>
+                <div id="news-feed"></div>
+            </div>
+
+            <div class="panel" style="margin-top: 20px;">
+                <h2>График личного приема граждан руководством ГУ УСБ</h2>
+                <p>Прием граждан по вопросам противодействия коррупции осуществляется по адресу: <strong>г. Санкт-Петербург, ул. Суворовская, д. 5, Кабинет №12</strong>.</p>
+                <div class="info-grid">
+                    <div class="info-box">
+                        <h4>Начальник Главного Управления</h4>
+                        <p>Каждый вторник с 16:00 до 19:00</p>
+                    </div>
+                    <div class="info-box">
+                        <h4>Заместитель начальника</h4>
+                        <p>Каждый четверг с 14:00 до 17:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 2 -->
+        <div id="tab-civilians" class="tab-content">
+            <div class="panel" style="margin-bottom: 20px;">
+                <h2>Форма подачи официального обращения / заявления на службу</h2>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Внимание! В соответствии с законодательством, за дачу заведомо ложных показаний предусмотрена уголовная ответственность.</p>
+                
+                <select id="civ-type">
+                    <option value="Жалоба на должностное лицо">Заявление о факте коррупции / вымогательства</option>
+                    <option value="Заявление на контрактную службу">Рапорт на зачисление в УСБ (Контракт)</option>
+                </select>
+                
+                <div class="info-grid" style="margin: 0; grid-template-columns: 1fr 1fr;">
+                    <input type="text" id="civ-fio" placeholder="Ваше полное ФИО (Иванов И.И.)">
+                    <input type="text" id="civ-contact" placeholder="Жетон / Discord / Телефон для связи">
+                </div>
+                
+                <textarea id="civ-text" style="height: 120px;" placeholder="Изложите суть происшествия во всех деталях..."></textarea>
+                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (Imgur / YouTube)">
+                <button onclick="submitCivilForm()">Направить обращение в ведомство</button>
+            </div>
+            
+            <div class="panel">
+                <h2>Реестр зарегистрированных обращений граждан (На рассмотрении)</h2>
+                <div id="civils-feed"></div>
+            </div>
+        </div>
+
+        <!-- ВКЛАДКА 3 -->
+        <div id="tab-evidence" class="tab-content">
+            <div class="panel">
+                <h2>Секретный ведомственный архив уголовных дел УСБ</h2>
+                <p id="evidence-locked-msg" style="color: var(--alert-red); font-weight: bold; text-align: center; letter-spacing: 1px; padding: 20px 0;">[ДОСТУП ОГРАНИЧЕН. ТРЕБУЕТСЯ СЛУЖЕБНАЯ АВТОРИЗАЦИЯ И ЭЛЕКТРОННЫЙ ЖЕТОН]</p>
+                
+                <div id="evidence-content" style="display: none;">
+                    <div style="background: rgba(2, 6, 23, 0.4); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--accent-blue);">
+                        <h4>Регистрация нового следственного дела / приобщение доказательств</h4>
+                        
+                        <div class="info-grid" style="margin: 0 0 8px 0; grid-template-columns: 1.5fr 1fr;">
+                            <input type="text" id="ev-case" placeholder="Уголовное дело № (Например: Дело №042-УК)">
+                            <select id="ev-status">
+                                <option value="В производстве">Статус: В производстве</option>
+                                <option value="Передано в суд">Статус: Передано в суд</option>
+                                <option value="Приостановлено">Статус: Приостановлено (Нехватка улик)</option>
+                            </select>
+                        </div>
+                        
+                        <textarea id="ev-desc" placeholder="Укажите подробные результаты оперативно-розыскных мероприятий (ОРМ)..."></textarea>
+                        <input type="text" id="ev-link" placeholder="Ссылка на засекреченные видео/аудио материалы">
+                        <button onclick="addEvidence()">Запечатать в архив ведомства</button>
+                    </div>
+                    <div id="evidence-list-feed"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ПРАВАЯ БОКОВАЯ КОЛОНКА -->
+    <div class="sidebar">
+        <div class="panel">
+            <h2>Дежурная Часть / Доступ</h2>
+            <div class="auth-status" id="auth-status-text">Статус доступа: Гражданское лицо</div>
+            
+            <div id="login-form">
+                <input type="text" id="login-username" placeholder="Служебный Логин / Фамилия">
+                <input type="password" id="login-pass" placeholder="Личный цифровой пароль">
+                <button onclick="login()">Авторизоваться в ДЧ</button>
+            </div>
+            <button id="logout-btn" class="btn-danger" style="display:none;" onclick="logout()">Завершить смену (Выход)</button>
+        </div>
+
+        <div class="panel hidden-panel" id="chief-panel">
+            <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
+            
+            <h4>Управление режимом Дежурной Части</h4>
+            <select id="dc-status-select" onchange="changeDcStatus()">
+                <option value="open">🟢 Прием обращений открыт (Штатный режим)</option>
+                <option value="fortress">🟡 Введен план «Крепость» (Доступ ограничен)</option>
+                <option value="emergency">🔴 Объявлен режим ЧС (Секретно)</option>
+            </select>
+
+            <div id="only-for-chief-settings">
+                <h4>Управление данными Руководства</h4>
+                <input type="text" id="new-chief-name" placeholder="Новое ФИО и звание Руководителя">
+                <button onclick="changeChiefName()">Обновить реестр</button>
+            </div>
+
+            <h4>Регистрация личного состава (Выдача жетонов и паролей)</h4>
+            <input type="text" id="reg-name" placeholder="Фамилия И.И. (Пример: Иванов И.И.)">
+            
+            <select id="reg-rank">
+                <option value="Заместитель начальника Управления">Заместитель начальника Управления (Подполковник)</option>
+                <option value="Старший оперуполномоченный по ОВД">Старший оперуполномоченный по ОВД</option>
+                <option value="Старший оперуполномоченный УСБ">Старший оперуполномоченный УСБ</option>
+                <option value="Оперуполномоченный УСБ">Оперуполномоченный УСБ</option>
+                <option value="Старший инспектор по особым поручениям">Старший инспектор по особым поручениям</option>
+                <option value="Инспектор по личному составу">Инспектор по личному составу</option>
+            </select>
+            
+            <input type="text" id="reg-pass" placeholder="Секретный пароль для сотрудника">
+            <button onclick="registerEmployee()" style="background-color: var(--success-green);">Внести в спецреестр МВД</button>
+
+            <h4>Выпустить официальный пресс-релиз</h4>
+            <input type="text" id="post-title" placeholder="Тема/Заголовок пресс-релиза">
+            <textarea id="post-text" placeholder="Текст официального заявления..."></textarea>
+            <input type="text" id="post-media" placeholder="Ссылка на фото/доказательства">
+            <button onclick="createPost()">Опубликовать от имени ГУ</button>
+
+            <h4>Внести в Федеральный Розыск</h4>
+            <input type="text" id="wanted-name" placeholder="ФИО подозреваемого лица">
+            <input type="text" id="wanted-reason" placeholder="Номер статьи УК РФ">
+            <button class="btn-danger" onclick="createWanted()">Объявить в розыск</button>
+        </div>
+
+        <div class="panel">
+            <h2>Федеральный Розыск МВД</h2>
+            <ul class="database-list" id="wanted-list"></ul>
+        </div>
+
+        <div class="panel">
+            <h2>Действующий состав ГУ УСБ</h2>
+            <ul class="database-list" id="police-list"></ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Инициализация базы данных с полностью вымышленными RP-адресами
+    if(!localStorage.getItem('db_chief')) localStorage.setItem('db_chief', 'Генерал-майор полиции Игрового Округа Игнатьев А.Е.');
+    if(!localStorage.getItem('db_dc_status')) localStorage.setItem('db_dc_status', 'open');
+    if(!localStorage.getItem('db_news')) localStorage.setItem('db_news', JSON.stringify([]));
+    if(!localStorage.getItem('db_wanted')) localStorage.setItem('db_wanted', JSON.stringify([{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава фракции, Блат [ROBLOX RP]"}]));
+    if(!localStorage.getItem('db_civils')) localStorage.setItem('db_civils', JSON.stringify([]));
+    if(!localStorage.getItem('db_evidence')) localStorage.setItem('db_evidence', JSON.stringify([]));
+    
+    // ВНЕСЕН ВАШ НОВЫЙ ЛИЧНЫЙ ДОСТУП ИЗ ЗАПРОСА
+    if(!localStorage.getItem('db_users')) {
+        localStorage.setItem('db_users', JSON.stringify([
+            {username: "IgnatebaAE", pass: "USBMVD_78_2026", rank: "Начальник Управления собственной безопасности [Основатель]", role: "chief"}
+        ]));
+    }
+
+    let activeUser = null;
+
+    window.onload = function() {
+        // Добавлаfunction logout()яем строгий юридический RP-дисклеймер на саму страницу при загрузке
+        const disclaimer = document.createElement('div');
+        disclaimer.style.cssText = "background:rgba(239,68,68,0.15); border:1px solid #ef4444; padding:10px; text-align:center; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1px; margin-bottom:15px; border-radius:6px;";
+        disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРА ROBLOX / PROVINCE RP). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
+        document.body.insertBefore(disclaimer, document.body.firstChild);
+
+        renderAll();
+        applyDcStatus(localStorage.getItem('db_dc_status'));
+    };
+
+    // Главная функция обновления таблиц и списков
+    function renderAll() {
+        document.getElementById('display-chief').innerText = localStorage.getItem('db_chief');
+        const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
+
+        // Вывод новостей пресс-службы
+        const news = JSON.parse(localStorage.getItem('db_news'));
+        const feed = document.getElementById('news-feed');
+        feed.innerHTML = news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Официальные пресс-релизы за текущие сутки отсутствуют.</p>' : '';
+        news.forEach((item, idx) => {
+            feed.innerHTML += `
+                <div class="card">
+                    ${canEdit ? `<button onclick="deleteItem('db_news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
+                    <h3>${item.title}</h3>
+                    <p><small>Дата публикации: ${item.date} | <strong>Документ подписал: ${item.author}</strong></small></p>
+                    <p>${item.text}</p>
+                    ${item.media ? `<div class="media-container"><img src="${item.media}"></div>`:'' }
+                </div>`;
+        });
+
+        // Вывод заявлений граждан
+        const civs = JSON.parse(localStorage.getItem('db_civils'));
+        const civFeed = document.getElementById('civils-feed');
+        civFeed.innerHTML = civs.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Обращений от граждан не зарегистрировано.</p>' : '';
+        civs.forEach((item, idx) => {
+            civFeed.innerHTML += `
+                <div class="card alert-card">
+                    ${canEdit ? `<button onclick="deleteItem('db_civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
+                    <h3>${item.type} (Заявитель: ${item.fio})</h3>
+                    <p><strong>Контакты для связи:</strong> ${item.contact}</p>
+                    <p>${item.text}</p>
+                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Вещдоки</a></p>`:''}
+                    <span class="badge blue">Статус: На рассмотрении</span>
+                </div>`;
+        });
+
+        // Вывод списков федерального розыска
+        const wanted = JSON.parse(localStorage.getItem('db_wanted'));
+        const wantedList = document.getElementById('wanted-list');
+        wantedList.innerHTML = '';
+        wanted.forEach((item, idx) => {
+            wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('db_wanted', ${idx})">❌</span>` : ''}</div></li>`;
+        });
+
+        // Вывод личного состава фракции
+        const users = JSON.parse(localStorage.getItem('db_users'));
+        const policeList = document.getElementById('police-list');
+        policeList.innerHTML = '';
+        users.forEach((u, idx) => {
+            const isChief = u.role === 'chief';
+            policeList.innerHTML += `<li><span>Офицер: ${u.username}</span> <div><span class="badge blue" style="margin-right:5px;">${u.rank}</span>${canEdit && !isChief ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('db_users', ${idx})">❌</span>` : ''}</div></li>`;
+        });
+
+        // Открытие архива уголовных дел для офицеров
+        if(activeUser) {
+            const evs = JSON.parse(localStorage.getItem('db_evidence'));
+            const evFeed = document.getElementById('evidence-list-feed');
+            evFeed.innerHTML = evs.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Следственные дела в архиве отсутствуют.</p>' : '';
+            evs.forEach((item, idx) => {
+                evFeed.innerHTML += `
+                    <div class="card case-card">
+                        ${canEdit ? `<button onclick="deleteItem('db_evidence', ${idx})" class="btn-danger delete-btn" style="display:block;">Стереть</button>` : ''}
+                        <h3>Материалы: ${item.case}</h3>
+                        <p><small>Следователь: <strong>${item.by}</strong></small></p>
+                        <p>${item.desc}</p>
+                        <p><a href="${item.link}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">Перейти к видеозаписи ОРМ</a></p>
+                        <span class="badge purple">${item.status}</span>
+                    </div>`;
+            });
+        }
+    }
+
+    // Служебная авторизация сотрудников по жетонам
+    function login() {
+        const uName = document.getElementById('login-username').value.trim();
+        const uPass = document.getElementById('login-pass').value.trim();
+        const users = JSON.parse(localStorage.getItem('db_users'));
+
+        const user = users.find(x => x.username === uName && x.pass === uPass);
+
+        if(user) {
+            activeUser = user;
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'block';
+            
+            if(user.role === 'chief' || user.rank === 'Заместитель начальника Управления') {
+                document.getElementById('chief-panel').style.display = 'block';
+                document.getElementById('admin-panel-title').innerText = `Кабинет: ${user.rank}`;
+                document.getElementById('only-for-chief-settings').style.display = user.role === 'chief' ? 'block' : 'none';
+                document.getElementById('auth-status-text').innerText = `ДОСТУП: РУКОВОДСТВО ГУ (${user.username})`;
+                document.getElementById('auth-status-text').style.color = 'var(--alert-red)';
+            } else {
+                document.getElementById('auth-status-text').innerText = `ДОСТУП: ОФИЦЕР УСБ (${user.username})`;
+                document.getElementById('auth-status-text').style.color = 'var(--success-green)';
+            }
+            
+            document.getElementById('evidence-locked-msg').style.display = 'none';
+            document.getElementById('evidence-content').style.display = 'block';
+            renderAll();
+            alert(`Доступ к базе данных МВД предоставлен. Здравия желаю, товарищ ${user.username}!`);
+        } else {
+            alert('ОТКАЗ В ДОСТУПЕ: Указанный сотрудник не значится в реестре МВД РФ!');
+        }
+    }
+
+    // Выход сотрудника из учетной записи
+        function logout() {
+        activeUser = null;
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('logout-btn').style.display = 'none';
+        document.getElementById('chief-panel').style.display = 'none';
+        document.getElementById('auth-status-text').innerText = 'Статус доступа: Гражданское лицо';
+        document.getElementById('auth-status-text').style.color = 'var(--text-muted)';
+        document.getElementById('evidence-locked-msg').style.display = 'block';
+        document.getElementById('evidence-content').style.display = 'none';
+        renderAll();
+    }
+
+    function registerEmployee() {
+        const name = document.getElementById('reg-name').value.trim();
+        const rank = document.getElementById('reg-rank').value;
+        const pass = document.getElementById('reg-pass').value.trim();
+
+        if(!name || !pass) return alert('Ошибка создания! Введите ник и игровой пароль.');
+
+        const users = JSON.parse(localStorage.getItem('db_users'));
+        if(users.some(x => x.username === name)) return alert('Данный аккаунт уже внесен в базу фракции!');
+
+        users.push({username: name, pass: pass, rank: rank, role: "employee"});
+        localStorage.setItem('db_users', JSON.stringify(users));
+        
+        document.getElementById('reg-name').value = '';
+        document.getElementById('reg-pass').value = '';
+        renderAll();
+        alert(`Игровой аккаунт сотрудника ${name} успешно создан.`);
+    }
+
+    function createPost() {
+        const title = document.getElementById('post-title').value.trim();
+        const text = document.getElementById('post-text').value.trim();
+        const media = document.getElementById('post-media').value.trim();
+        if(!title || !text) return alert('Поля обязательны к заполнению!');
+
+        const news = JSON.parse(localStorage.getItem('db_news'));
+        const authorSignature = `${activeUser.username} (${activeUser.rank})`;
+
+        news.unshift({title, text, media, author: authorSignature, date: new Date().toLocaleDateString()});
+        localStorage.setItem('db_news', JSON.stringify(news));
+        
+        document.getElementById('post-title').value = '';
+        document.getElementById('post-text').value = '';
+        document.getElementById('post-media').value = '';
+        renderAll();
+        alert('Игровая сводка опубликована.');
+    }
+
+    function submitCivilForm() {
+        const type = document.getElementById('civ-type').value;
+        const fio = document.getElementById('civ-fio').value.trim();
+        const contact = document.getElementById('civ-contact').value.trim();
+        const text = document.getElementById('civ-text').value.trim();
+        const proof = document.getElementById('civ-proof').value.trim();
+
+        if(!fio || !text || !contact) return alert('Пожалуйста, заполните ваш игровой ник и суть заявления!');
+
+        const civs = JSON.parse(localStorage.getItem('db_civils'));
+        civs.unshift({type, fio, contact, text, proof});
+        localStorage.setItem('db_civils', JSON.stringify(civs));
+
+        document.getElementById('civ-fio').value = '';
+        document.getElementById('civ-contact').value = '';
+        document.getElementById('civ-text').value = '';
+        document.getElementById('civ-proof').value = '';
+        renderAll();
+        alert('Заявление отправлено в дежурную часть игрового сервера.');
+    }
+
+    function addEvidence() {
+        const caseName = document.getElementById('ev-case').value.trim();
+        const status = document.getElementById('ev-status').value;
+        const desc = document.getElementById('ev-desc').value.trim();
+        const link = document.getElementById('ev-link').value.trim();
+
+        if(!caseName || !desc) return alert('Заполните данные следственного дела!');
+
+        const evs = JSON.parse(localStorage.getItem('db_evidence'));
+        const authorSignature = `${activeUser.username} [${activeUser.rank}]`;
+        
+        evs.unshift({case: caseName, status, desc, link, by: authorSignature});
+        localStorage.setItem('db_evidence', JSON.stringify(evs));
+
+        document.getElementById('ev-case').value = '';
+        document.getElementById('ev-desc').value = '';
+        document.getElementById('ev-link').value = '';
+        renderAll();
+        alert('Игровые улики запечатаны в архив.');
+    }
+
+    function changeDcStatus() {
+        const status = document.getElementById('dc-status-select').value;
+        localStorage.setItem('db_dc_status', status);
+        applyDcStatus(status);
+        alert('Оперативный режим фракции успешно изменен.');
+    }
+
+    function applyDcStatus(status) {
+        const dot = document.getElementById('dc-status-dot');
+        const text = document.getElementById('dc-status-text');
+        const block = document.getElementById('dc-status-block');
+
+        if(status === 'open') {
+            dot.style.backgroundColor = 'var(--success-green)';
+            text.innerText = 'Прием обращений [ИГРА]';
+            block.style.borderColor = 'var(--success-green)';
+            block.style.boxShadow = 'var(--success-glow)';
+        } else if(status === 'fortress') {
+            dot.style.backgroundColor = '#f59e0b';
+            text.innerText = 'План «Крепость» [ФРАКЦИЯ]';
+            block.style.borderColor = '#f59e0b';
+            block.style.boxShadow = '0 0 20px rgba(245,158,11,0.4)';
+        } else if(status === 'emergency') {
+            dot.style.backgroundColor = 'var(--alert-red)';
+            text.innerText = 'Режим ЧС на сервере';
+            block.style.borderColor = 'var(--alert-red)';
+            block.style.boxShadow = 'var(--alert-glow)';
+        }
+    }
+
+    function deleteItem(dbKey, index) {
+        if(!confirm('Подтверждаете удаление игровой записи?')) return;
+        const data = JSON.parse(localStorage.getItem(dbKey));
+        data.splice(index, 1);
+        localStorage.setItem(dbKey, JSON.stringify(data));
+        renderAll();
+    }
+
+    function changeChiefName() {
+        const name = document.getElementById('new-chief-name').value.trim();
+        if(!name) return;
+        localStorage.setItem('db_chief', name + ' [Игровой сервер]');
+        document.getElementById('new-chief-name').value = '';
+        renderAll();
+        alert('Данные лидера фракции обновлены.');
+    }
+
+    function createWanted() {
+        const name = document.getElementById('wanted-name').value.trim();
+        const reason = document.getElementById('wanted-reason').value.trim();
+        if(!name || !reason) return alert('Заполните карточку розыска!');
+
+        const wanted = JSON.parse(localStorage.getItem('db_wanted'));
+        wanted.unshift({name, reason});
+        localStorage.setItem('db_wanted', JSON.stringify(wanted));
+        
+        document.getElementById('wanted-name').value = '';
+        document.getElementById('wanted-reason').value = '';
+        renderAll();
+        alert('Нарушитель занесен в список фракционного розыска.');
+    }
+
+    function switchTab(tabId, btn) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function toggleLaws() {
+        const panel = document.getElementById('laws-panel');
+        panel.style.display = panel.style.display === 'grid' ? 'none' : 'grid';
+    }
+</script>
+</body>
+</html>
