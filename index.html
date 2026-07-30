@@ -307,8 +307,8 @@
 
 <script>
     // Уникальные новые каналы для чистой загрузки данных
-    const NETWORK_CHANNEL = "usb_mvd_spb_ign_final_2026_v2";
-    const CHAT_CHANNEL = "usb_mvd_spb_chat_final_2026_v2";
+    const NETWORK_CHANNEL = "usb_mvd_spb_ign_final_2026_v3";
+    const CHAT_CHANNEL = "usb_mvd_spb_chat_final_2026_v3";
 
     let activeUser = null;
     let localDB = {
@@ -330,14 +330,15 @@
 
         loadNetworkData();
         loadChatMessages();
-        setInterval(loadNetworkData, 4000);
-        setInterval(loadChatMessages, 2500);
+        // Быстрая проверка сети каждые 2.5 секунды для мгновенного обновления у всех игроков
+        setInterval(loadNetworkData, 2500);
+        setInterval(loadChatMessages, 2000);
     };
 
     function loadNetworkData() {
         $.get(`https://dweet.cc{NETWORK_CHANNEL}`, function(res) {
-            if(res && res.with && res.with && res.with.content) {
-                const serverData = res.with.content;
+            if(res && res.with && res.with[0] && res.with[0].content) {
+                const serverData = res.with[0].content;
                 if(serverData.civils) localDB.civils = serverData.civils;
                 if(serverData.news) localDB.news = serverData.news;
                 if(serverData.wanted) localDB.wanted = serverData.wanted;
@@ -346,7 +347,7 @@
                 if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
             }
             renderAll();
-        }).fail(function() { renderAll(); }); // Защита: если сервер упал, сайт не виснет
+        }).fail(function() { renderAll(); });
     }
 
     function saveNetworkData() {
@@ -355,8 +356,8 @@
 
     function loadChatMessages() {
         $.get(`https://dweet.cc{CHAT_CHANNEL}`, function(res) {
-            if(res && res.with && res.with && res.with.content && res.with.content.messages) {
-                chatHistory = res.with.content.messages;
+            if(res && res.with && res.with[0] && res.with[0].content && res.with[0].content.messages) {
+                chatHistory = res.with[0].content.messages;
                 renderChat();
             }
         });
@@ -392,7 +393,6 @@
         });
         box.scrollTop = box.scrollHeight;
     }
-
     function renderAll() {
         document.getElementById('display-chief').innerText = localDB.chief;
         const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
@@ -437,7 +437,7 @@
         if(activeUser && evFeed) {
             evFeed.innerHTML = localDB.evidence.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Следственные дела отсутствуют.</p>' : '';
             localDB.evidence.forEach((item, idx) => {
-                evFeed.innerHTML += `Template literals: <div class="card case-card">
+                evFeed.innerHTML += `<div class="card case-card">
                     ${canEdit ? `<button onclick="deleteItem('evidence', ${idx})" class="btn-danger delete-btn" style="display:block;">Стереть</button>` : ''}
                     <h3>Материалы: ${item.case}</h3>
                     <p><small>Следователь: <strong>${item.by}</strong></small></p>
@@ -513,6 +513,25 @@
     function changeDcStatus() {
         localDB.dc_status = document.getElementById('dc-status-select').value;
         saveNetworkData();
+    }
+
+    function createPost() {
+        const title = document.getElementById('post-title').value.trim();
+        const text = document.getElementById('post-text').value.trim();
+        if(!title || !text) return alert('Заполните заголовок и текст пресс-релиза!');
+
+        const authorSignature = `${activeUser.username}`;
+        localDB.news.unshift({
+            title: title,
+            text: text,
+            author: authorSignature,
+            date: new Date().toLocaleDateString()
+        });
+        saveNetworkData();
+
+        document.getElementById('post-title').value = '';
+        document.getElementById('post-text').value = '';
+        alert('Официальный пресс-релиз выпущен глобально для всех игроков!');
     }
 
     function createWanted() {
