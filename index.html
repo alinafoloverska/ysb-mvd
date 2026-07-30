@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><h1>Управление собственной безопасности</h1></title>
+    <title>УСБ ГУ МВД России по г. Санкт-Петербургу и ЛО</title>
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
@@ -41,7 +41,7 @@
             width: 95px; height: auto; margin-bottom: 12px;
             filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
         }
-        header h1 { margin: 5px 0; font-size: 26px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        header h1 { margin: 5px 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         header p { margin: 5px 0; color: var(--text-muted); font-size: 14px; font-weight: 400; letter-spacing: 1px; }
         
         .chief-badge {
@@ -79,7 +79,7 @@
             border: 1px solid var(--glass-border); border-radius: 12px; padding: 22px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
         }
-        .panel h2 { margin-top: 0; font-size: 17px; text-transform: uppercase; border-bottom: 2px solid var(--accent-blue); padding-bottom: 8px; letter-spacing: 1.5px; font-weight: 700; color: #fff; }
+        .panel h2 { margin-top: 0; font-size: 16px; text-transform: uppercase; border-bottom: 2px solid var(--accent-blue); padding-bottom: 8px; letter-spacing: 1.5px; font-weight: 700; color: #fff; }
         
         .laws-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 5px; }
         .law-card { background: rgba(2, 6, 23, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; text-align: center; font-size: 13px; }
@@ -94,9 +94,6 @@
         }
         .card.alert-card { border-left-color: var(--alert-red); background: rgba(220, 38, 38, 0.05); }
         .card.case-card { border-left-color: #a855f7; }
-        
-        .media-container { margin-top: 15px; border-radius: 6px; overflow: hidden; background: #020617; border: 1px solid rgba(255,255,255,0.1); }
-        .media-container img { max-width: 100%; max-height: 400px; display: block; margin: 0 auto; }
 
         input, textarea, select, button {
             width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
@@ -123,14 +120,13 @@
         .badge.blue { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid var(--accent-blue); }
         .badge.purple { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #a855f7; }
 
-        .list-actions { display: flex; gap: 8px; align-items: center; }
-        
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .info-box { background: rgba(2,6,23,0.4); padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); }
         .info-box h4 { margin: 0 0 5px 0; color: #fff; font-size: 14px; }
         .info-box p { margin: 0; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
+
 <body>
 
 <header>
@@ -138,12 +134,10 @@
         <div class="status-dot" id="dc-status-dot"></div>
         <span id="dc-status-text">Прием обращений [ИГРА]</span>
     </div>
-
     <img class="mvd-logo" src="https://postimg.cc" alt="Герб МВД России">
-    <!-- КРУТОЕ И ПОЛНОЕ НАЗВАНИЕ ВЕДОМСТВА -->
     <h1>Управление собственной безопасности ГУ МВД России</h1>
     <p>по г. Санкт-Петербургу и Ленинградской области • Официальный интерактивный портал</p>
-    <div class="chief-badge">Руководитель подразделения: <strong id="display-chief">Загрузка информации...</strong></div>
+    <div class="chief-badge">Руководитель подразделения: <strong id="display-chief">Полковник УСБ Игнатьева А.Е.</strong></div>
 </header>
 
 <nav>
@@ -154,7 +148,6 @@
 </nav>
 
 <div class="container">
-    
     <div class="main-content">
         <div class="panel laws-grid" id="laws-panel">
             <div class="law-card"><h3>ФЗ №3 «О полиции»</h3><p>Регламент работы и права</p><a href="https://consultant.ru" target="_blank">КонсультантПлюс</a></div>
@@ -162,77 +155,56 @@
             <div class="law-card"><h3>КоАП РФ</h3><p>Административные статьи</p><a href="https://consultant.ru" target="_blank">КонсультантПлюс</a></div>
         </div>
 
-        <!-- ВКЛАДКА 1 -->
         <div id="tab-press" class="tab-content active">
             <div class="panel">
-                <h2>Официальные пресс-релизы и хроника</h2>
+                <h2>Официальные пресс-релизы и хроника ведомства</h2>
                 <div id="news-feed"></div>
             </div>
-
             <div class="panel" style="margin-top: 20px;">
-                <h2>График личного приема граждан руководством ГУ УСБ</h2>
-                <p>Прием граждан по вопросам противодействия коррупции осуществляется по адресу: <strong>г. Санкт-Петербург, ул. Суворовская, д. 5, Кабинет №12</strong>.</p>
+                <h2>График личного приема граждан руководством УСБ</h2>
+                <p>Прием осуществляется по адресу: <strong>г. Санкт-Петербург, ул. Суворовская, д. 5, Кабинет №12</strong>.</p>
                 <div class="info-grid">
-                    <div class="info-box">
-                        <h4>Начальник Главного Управления</h4>
-                        <p>Каждый вторник с 16:00 до 19:00</p>
-                    </div>
-                    <div class="info-box">
-                        <h4>Заместитель начальника</h4>
-                        <p>Каждый четверг с 14:00 до 17:00</p>
-                    </div>
+                    <div class="info-box"><h4>Начальник Управления</h4><p>Каждый вторник с 10:00 до 13:00</p></div>
+                    <div class="info-box"><h4>Заместитель начальника</h4><p>Каждый четверг с 14:00 до 17:00</p></div>
                 </div>
             </div>
         </div>
 
-        <!-- ВКЛАДКА 2 -->
         <div id="tab-civilians" class="tab-content">
             <div class="panel" style="margin-bottom: 20px;">
-                <h2>Форма подачи официального обращения / заявления на службу</h2>
-                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Внимание! В соответствии с законодательством, за дачу заведомо ложных показаний предусмотрена уголовная ответственность.</p>
-                
+                <h2>Форма подачи заявления / рапорта</h2>
                 <select id="civ-type">
-                    <option value="Жалоба на должностное лицо">Заявление о факте коррупции / вымогательства</option>
-                    <option value="Заявление на контрактную службу">Рапорт на зачисление в УСБ (Контракт)</option>
+                    <option value="Жалоба о коррупции">Заявление о факте коррупции / должностных нарушениях</option>
+                    <option value="Рапорт на контракт">Рапорт на зачисление в ряды УСБ (Контракт)</option>
                 </select>
-                
                 <div class="info-grid" style="margin: 0; grid-template-columns: 1fr 1fr;">
-                    <input type="text" id="civ-fio" placeholder="Ваше полное ФИО (Иванов И.И.)">
+                    <input type="text" id="civ-fio" placeholder="Ваш игровой ник (Имя_Фамилия)">
                     <input type="text" id="civ-contact" placeholder="Жетон / Discord / Телефон для связи">
                 </div>
-                
-                <textarea id="civ-text" style="height: 120px;" placeholder="Изложите суть происшествия во всех деталях..."></textarea>
-                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (Imgur / YouTube)">
+                <textarea id="civ-text" style="height: 120px;" placeholder="Изложите суть ситуации во всех подробностях..."></textarea>
+                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (YouTube / Imgur)">
                 <button onclick="submitCivilForm()">Направить обращение в ведомство</button>
             </div>
-            
             <div class="panel">
-                <h2>Реестр зарегистрированных обращений граждан (На рассмотрении)</h2>
+                <h2>Реестр зарегистрированных обращений граждан</h2>
                 <div id="civils-feed"></div>
             </div>
         </div>
-
-        <!-- ВКЛАДКА 3 -->
         <div id="tab-evidence" class="tab-content">
             <div class="panel">
-                <h2>Секретный ведомственный архив уголовных дел УСБ</h2>
-                <p id="evidence-locked-msg" style="color: var(--alert-red); font-weight: bold; text-align: center; letter-spacing: 1px; padding: 20px 0;">[ДОСТУП ОГРАНИЧЕН. ТРЕБУЕТСЯ СЛУЖЕБНАЯ АВТОРИЗАЦИЯ И ЭЛЕКТРОННЫЙ ЖЕТОН]</p>
-                
+                <h2>Секретный ведомственный архив уголовных дел</h2>
+                <p id="evidence-locked-msg" style="color: var(--alert-red); font-weight: bold; text-align: center; padding: 20px 0;">[ДОСТУП ОГРАНИЧЕН. ТРЕБУЕТСЯ СЛУЖЕБНАЯ АВТОРИЗАЦИЯ И ЭЛЕКТРОННЫЙ ЖЕТОН]</p>
                 <div id="evidence-content" style="display: none;">
                     <div style="background: rgba(2, 6, 23, 0.4); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--accent-blue);">
-                        <h4>Регистрация нового следственного дела / приобщение доказательств</h4>
-                        
+                        <h4>Регистрация нового следственного дела / улик</h4>
                         <div class="info-grid" style="margin: 0 0 8px 0; grid-template-columns: 1.5fr 1fr;">
-                            <input type="text" id="ev-case" placeholder="Уголовное дело № (Например: Дело №042-УК)">
+                            <input type="text" id="ev-case" placeholder="Уголовное дело № (Например: Дело №12-УСБ)">
                             <select id="ev-status">
                                 <option value="В производстве">Статус: В производстве</option>
                                 <option value="Передано в суд">Статус: Передано в суд</option>
-                                <option value="Приостановлено">Статус: Приостановлено (Нехватка улик)</option>
                             </select>
                         </div>
-                        
-                        <textarea id="ev-desc" placeholder="Укажите подробные результаты оперативно-розыскных мероприятий (ОРМ)..."></textarea>
-                        <input type="text" id="ev-link" placeholder="Ссылка на засекреченные видео/аудио материалы">
+                        <textarea id="ev-desc" placeholder="Укажите подробные результаты расследования (ОРМ)..."></textarea>
                         <button onclick="addEvidence()">Запечатать в архив ведомства</button>
                     </div>
                     <div id="evidence-list-feed"></div>
@@ -241,106 +213,86 @@
         </div>
     </div>
 
-        <!-- ПРАВАЯ БОКОВАЯ КОЛОНКА С СИСТЕМНОЙ ЗАЩИТОЙ ДОСТУПА -->
     <div class="sidebar">
         <div class="panel">
             <h2>Дежурная Часть / Доступ</h2>
             <div class="auth-status" id="auth-status-text">Статус доступа: Гражданское лицо</div>
-            
             <div id="login-form">
-                <input type="text" id="login-username" placeholder="Служебный Логин / Фамилия">
-                <input type="password" id="login-pass" placeholder="Личный цифровой пароль">
+                <input type="text" id="login-username" placeholder="Служебный Логин">
+                <input type="password" id="login-pass" placeholder="Личный пароль">
                 <button onclick="login()">Авторизоваться в ДЧ</button>
             </div>
-            <button id="logout-btn" class="btn-danger" style="display:none;" onclick="logout()">Завершить смену (Выход)</button>
+            <button id="logout-btn" class="btn-danger" style="display:none;" onclick="logout()">Завершить дежурство (Выход)</button>
         </div>
 
-        <!-- СИТУАЦИОННЫЙ ЦЕНТР: ЗАБЛОКИРОВАН И СКРЫТ ОТ ГРАЖДАНСКИХ ЛИЦ -->
+        <!-- СИТУАЦИОННЫЙ ЦЕНТР СКРЫТ ОТ ГРАЖДАНСКИХ ЛИЦ -->
         <div class="panel hidden-panel" id="chief-panel" style="display: none;">
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
-            
             <h4>Управление режимом Дежурной Части</h4>
             <select id="dc-status-select" onchange="changeDcStatus()">
-                <option value="open">🟢 Прием обращений открыт (Штатный regime)</option>
-                <option value="fortress">🟡 Введен план «Крепость» (Доступ ограничен)</option>
-                <option value="emergency">🔴 Объявлен режим ЧС (Секретно)</option>
+                <option value="open">🟢 Прием обращений открыт (Штатный режим)</option>
+                <option value="fortress">🔴 Режим ограничений / План «Крепость»</option>
             </select>
-
-            <div id="only-for-chief-settings">
-                <h4>Управление данными Руководства</h4>
-                <input type="text" id="new-chief-name" placeholder="Новое ФИО и звание Руководителя">
-                <button onclick="changeChiefName()">Обновить реестр</button>
-            </div>
-
-            <h4>Регистрация личного состава (Выдача жетонов и паролей)</h4>
-            <input type="text" id="reg-name" placeholder="Фамилия И.И. (Пример: Иванов И.И.)">
-            
-            <select id="reg-rank">
-                <option value="Заместитель начальника Управления">Заместитель начальника Управления (Подполковник)</option>
-                <option value="Старший оперуполномоченный по ОВД">Старший оперуполномоченный по ОВД</option>
-                <option value="Старший оперуполномоченный УСБ">Старший оперуполномоченный УСБ</option>
-                <option value="Оперуполномоченный УСБ">Оперуполномоченный УСБ</option>
-                <option value="Старший инспектор по особым поручениям">Старший инспектор по особым поручениям</option>
-                <option value="Инспектор по личному составу">Инспектор по личному составу</option>
-            </select>
-            
-            <input type="text" id="reg-pass" placeholder="Секретный пароль для сотрудника">
-            <button onclick="registerEmployee()" style="background-color: var(--success-green);">Внести в спецреестр МВД</button>
-
+            <h4>Управление данными Руководства</h4>
+            <input type="text" id="new-chief-name" placeholder="Новое ФИО и звание Руководителя">
+            <button onclick="changeChiefName()">Обновить реестр</button>
             <h4>Выпустить официальный пресс-релиз</h4>
-            <input type="text" id="post-title" placeholder="Тема/Заголовок пресс-релиза">
+            <input type="text" id="post-title" placeholder="Заголовок пресс-релиза">
             <textarea id="post-text" placeholder="Текст официального заявления..."></textarea>
-            <input type="text" id="post-media" placeholder="Ссылка на photo/доказательства">
-            <button onclick="createPost()">Опубликовать от имени ГУ</button>
-
+            <button onclick="createPost()">Опубликовать от имени УСБ</button>
             <h4>Внести в Федеральный Розыск</h4>
-            <input type="text" id="wanted-name" placeholder="ФИО подозреваемого лица">
-            <input type="text" id="wanted-reason" placeholder="Номер статьи УК РФ">
+            <input type="text" id="wanted-name" placeholder="ФИО подозреваемого игрока">
+            <input type="text" id="wanted-reason" placeholder="Статья УК РФ">
             <button class="btn-danger" onclick="createWanted()">Объявить в розыск</button>
+        </div>
+
+        <!-- ОНЛАЙН СЛУЖЕБНАЯ РАЦИЯ -->
+        <div class="panel">
+            <h2>📻 Служебная рация УСБ [ОНЛАЙН]</h2>
+            <div id="chat-box" style="height: 180px; overflow-y: auto; background: rgba(2, 6, 23, 0.5); padding: 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
+            <div style="display: flex; gap: 6px;">
+                <input type="text" id="chat-nick" placeholder="Позывной" style="width: 35%; margin: 0; padding: 6px;">
+                <input type="text" id="chat-msg" placeholder="Текст..." style="width: 65%; margin: 0; padding: 6px;" onkeydown="if(event.key==='Enter') sendChatMessage()">
+            </div>
         </div>
 
         <div class="panel">
             <h2>Федеральный Розыск МВД</h2>
             <ul class="database-list" id="wanted-list"></ul>
         </div>
-
-        <div class="panel">
-            <h2>Действующий состав ГУ УСБ</h2>
-            <ul class="database-list" id="police-list"></ul>
-        </div>
     </div>
+</div>
 
-<!-- ПОДКЛЮЧЕНИЕ СЕТЕВОЙ БИБЛИОТЕКИ ДЛЯ СВЯЗИ ИГРОКОВ -->
 <script src="https://cloudflare.com"></script>
 
 <script>
-    // Уникальный секретный канал вашей фракции в сети
-    const NETWORK_CHANNEL = "usb_mvd_spb_ignateva_2026";
+    const NETWORK_CHANNEL = "usb_mvd_spb_ignateva_2026_fixed";
+    const CHAT_CHANNEL = "usb_mvd_spb_chat_room_2026_fixed";
 
     let activeUser = null;
     let localDB = {
         chief: 'Полковник УСБ Игнатьева А.Е.',
         dc_status: 'open',
         news: [],
-        wanted: [{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава фракции [Roblox RP]"}],
+        wanted: [{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава [Roblox RP]"}],
         civils: [],
         evidence: [],
         users: [{username: "IgnatebaAE", pass: "USBMVD_78_2026", rank: "Начальник Управления собственной безопасности [Основатель]", role: "chief"}]
     };
+    let chatHistory = [];
 
     window.onload = function() {
         const disclaimer = document.createElement('div');
         disclaimer.style.cssText = "background:rgba(239,68,68,0.15); border:1px solid #ef4444; padding:10px; text-align:center; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1px; margin-bottom:15px; border-radius:6px;";
-        disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРА ROBLOX / PROVINCE RP). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
+        disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРА). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
         document.body.insertBefore(disclaimer, document.body.firstChild);
 
-        // Каждые 3 секунды проверяем сервер на наличие новых заявлений от игроков
         loadNetworkData();
+        loadChatMessages();
         setInterval(loadNetworkData, 3000);
+        setInterval(loadChatMessages, 2000);
     };
 
-    // Функция загрузки данных из интернета
-    // Функция загрузки данных из интернета (Исправлено на dweet.cc)
     function loadNetworkData() {
         $.get(`https://dweet.cc{NETWORK_CHANNEL}`, function(res) {
             if(res && res.with && res.with[0] && res.with[0].content) {
@@ -353,71 +305,52 @@
                 if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
             }
             renderAll();
-        });
+        }).fail(function() { renderAll(); });
     }
 
-    // Отправка обновлений на рабочий сервер dweet.cc
     function saveNetworkData() {
         $.post(`https://dweet.cc{NETWORK_CHANNEL}`, localDB);
     }
 
-    function renderAll() {
-        document.getElementById('display-chief').innerText = localDB.chief;
-        const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
-
-        const feed = document.getElementById('news-feed');
-        if (feed) {
-            feed.innerHTML = localDB.news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Игровые пресс-релизы отсутствуют.</p>' : '';
-            localDB.news.forEach((item, idx) => {
-                feed.innerHTML += `<div class="card">
-                    ${canEdit ? `<button onclick="deleteItem('news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
-                    <h3>${item.title} [ВНУТРИИГРОВАЯ СВОДКА]</h3>
-                    <p><small>Игровая дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
-                    <p>${item.text}</p>
-                </div>`;
-            });
-        }
-
-        const civFeed = document.getElementById('civils-feed');
-        if (civFeed) {
-            civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Жалоб и рапортов от игроков не зарегистрировано.</p>' : '';
-            localDB.civils.forEach((item, idx) => {
-                civFeed.innerHTML += `<div class="card alert-card">
-                    ${canEdit ? `<button onclick="deleteItem('civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
-                    <h3>${item.type} (Игрок: ${item.fio})</h3>
-                    <p><strong>Связь:</strong> ${item.contact}</p>
-                    <p>${item.text}</p>
-                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Доказательства</a></p>`:''}
-                    <span class="badge blue">RP-Статус: На рассмотрении руководства</span>
-                </div>`;
-            });
-        }
-
-        const wantedList = document.getElementById('wanted-list');
-        if (wantedList) {
-            wantedList.innerHTML = '';
-            localDB.wanted.forEach((item, idx) => {
-                wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('wanted', ${idx})">❌</span>` : ''}</div></li>`;
-            });
-        }
-
-        const policeList = document.getElementById('police-list');
-        if (policeList) {
-            policeList.innerHTML = '';
-            localDB.users.forEach((u) => {
-                policeList.innerHTML += `<li><span>Офицер: ${u.username}</span> <div><span class="badge blue">${u.rank}</span></div></li>`;
-            });
-        }
-    }
-
+    function loadChatMessages() {
+        $.get(`https://dweet.cc{CHAT_CHANNEL}`, function(res) {
+            if(res && res.with && res.with[0] && res.with[0].content && res.with[0].content.messages) {
+                chatHistory = res.with[0].content.messages;
+                renderChat();
+            }
         });
     }
 
-    // Отправка обновлений на сервер
-    function saveNetworkData() {
-        $.post(`https://dweet.io{NETWORK_CHANNEL}`, localDB);
+    function sendChatMessage() {
+        const nickInput = document.getElementById('chat-nick');
+        const msgInput = document.getElementById('chat-msg');
+        let sender = nickInput ? nickInput.value.trim() : "";
+        if(activeUser) sender = activeUser.username;
+        if(!sender) sender = "Гражданский";
+
+        const text = msgInput ? msgInput.value.trim() : "";
+        if(!text) return;
+
+        const time = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        chatHistory.push({sender, text, time});
+        if(chatHistory.length > 25) chatHistory.shift();
+
+        $.post(`https://dweet.cc{CHAT_CHANNEL}`, {messages: chatHistory}, function() {
+            if(msgInput) msgInput.value = '';
+            renderChat();
+        });
     }
 
+    function renderChat() {
+        const box = document.getElementById('chat-box');
+        if(!box) return;
+        box.innerHTML = '';
+        chatHistory.forEach(m => {
+            const color = m.sender === "IgnatebaAE" ? "var(--alert-red)" : "var(--accent-cyan)";
+            box.innerHTML += `<div><span style="color: var(--text-muted); font-size: 10px;">[${m.time}]</span> <strong style="color: ${color}">${m.sender}:</strong> <span style="color: #fff">${m.text}</span></div>`;
+        });
+        box.scrollTop = box.scrollHeight;
+    }
     function renderAll() {
         document.getElementById('display-chief').innerText = localDB.chief;
         const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
@@ -428,8 +361,8 @@
             localDB.news.forEach((item, idx) => {
                 feed.innerHTML += `<div class="card">
                     ${canEdit ? `<button onclick="deleteItem('news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
-                    <h3>${item.title} [ВНУТРИИГРОВАЯ СВОДКА]</h3>
-                    <p><small>Игровая дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
+                    <h3>${item.title}</h3>
+                    <p><small>Дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
                     <p>${item.text}</p>
                 </div>`;
             });
@@ -437,7 +370,7 @@
 
         const civFeed = document.getElementById('civils-feed');
         if (civFeed) {
-            civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Жалоб и рапортов от игроков не зарегистрировано.</p>' : '';
+            civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Заявлений от игроков не зарегистрировано.</p>' : '';
             localDB.civils.forEach((item, idx) => {
                 civFeed.innerHTML += `<div class="card alert-card">
                     ${canEdit ? `<button onclick="deleteItem('civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
@@ -445,7 +378,7 @@
                     <p><strong>Связь:</strong> ${item.contact}</p>
                     <p>${item.text}</p>
                     ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Доказательства</a></p>`:''}
-                    <span class="badge blue">RP-Статус: На рассмотрении руководства</span>
+                    <span class="badge blue">RP-Статус: На рассмотрении</span>
                 </div>`;
             });
         }
@@ -455,14 +388,6 @@
             wantedList.innerHTML = '';
             localDB.wanted.forEach((item, idx) => {
                 wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('wanted', ${idx})">❌</span>` : ''}</div></li>`;
-            });
-        }
-
-        const policeList = document.getElementById('police-list');
-        if (policeList) {
-            policeList.innerHTML = '';
-            localDB.users.forEach((u) => {
-                policeList.innerHTML += `<li><span>Офицер: ${u.username}</span> <div><span class="badge blue">${u.rank}</span></div></li>`;
             });
         }
 
@@ -479,6 +404,7 @@
                 </div>`;
             });
         }
+        applyDcStatus(localDB.dc_status);
     }
 
     function login() {
@@ -498,7 +424,7 @@
             renderAll();
             alert(`Вход выполнен успешно, товарищ Полковник!`);
         } else {
-            alert('ОТКАЗ В ДОСТУПЕ! Неверный игровой логин или пароль.');
+            alert('ОТКАЗ В ДОСТУПЕ! Неверный логин или пароль.');
         }
     }
 
@@ -514,7 +440,6 @@
         renderAll();
     }
 
-    // ИГРОК ПИШЕТ ЗАЯВЛЕНИЕ — ОНО УЛЕТАЕТ В СЕТЬ ДЛЯ ВСЕХ
     function submitCivilForm() {
         const type = document.getElementById('civ-type').value;
         const fio = document.getElementById('civ-fio').value.trim();
@@ -522,16 +447,16 @@
         const text = document.getElementById('civ-text').value.trim();
         const proof = document.getElementById('civ-proof').value.trim();
 
-        if(!fio || !text || !contact) return alert('Пожалуйста, заполните ваш игровой ник и суть заявления!');
+        if(!fio || !text || !contact) return alert('Пожалуйста, заполните форму полностью!');
 
         localDB.civils.unshift({type, fio, contact, text, proof});
-        saveNetworkData(); // Мгновенно отправляем на общий сервер
+        saveNetworkData();
 
         document.getElementById('civ-fio').value = '';
         document.getElementById('civ-contact').value = '';
         document.getElementById('civ-text').value = '';
         document.getElementById('civ-proof').value = '';
-        alert('Заявление успешно отправлено в общую базу данных ведомства!');
+        alert('Заявление успешно отправлено!');
     }
 
     function changeChiefName() {
@@ -540,13 +465,12 @@
         localDB.chief = name;
         saveNetworkData();
         document.getElementById('new-chief-name').value = '';
-        alert('Данные руководителя обновлены на сервере.');
+        alert('Данные руководителя обновлены.');
     }
 
     function changeDcStatus() {
         localDB.dc_status = document.getElementById('dc-status-select').value;
         saveNetworkData();
-        alert('Оперативный режим изменен для всех игроков.');
     }
 
     function createWanted() {
@@ -557,7 +481,7 @@
         saveNetworkData();
         document.getElementById('wanted-name').value = '';
         document.getElementById('wanted-reason').value = '';
-        alert('Игрок объявлен в розыск глобально.');
+        alert('Игрок объявлен в розыск.');
     }
 
     function deleteItem(dbKey, index) {
@@ -570,13 +494,8 @@
         const dot = document.getElementById('dc-status-dot');
         const text = document.getElementById('dc-status-text');
         if(!dot || !text) return;
-        if(status === 'open') { 
-            dot.style.backgroundColor = 'var(--success-green)'; 
-            text.innerText = 'Прием обращений [ИГРА]'; 
-        } else { 
-            dot.style.backgroundColor = 'var(--alert-red)'; 
-            text.innerText = 'Режим ограничений [ФРАКЦИЯ]'; 
-        }
+        if(status === 'open') { dot.style.backgroundColor = 'var(--success-green)'; text.innerText = 'Прием обращений [ИГРА]'; }
+        else { dot.style.backgroundColor = 'var(--alert-red)'; text.innerText = 'Режим ограничений [ФРАКЦИЯ]'; }
     }
 
     function switchTab(tabId, btn) {
