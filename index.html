@@ -42,71 +42,82 @@
             transition: background 0.4s ease;
         }
 
-        /* АНИМИРОВАННЫЙ ТРЕК С ОБЪЕМНОЙ 3D МАШИНОЙ И НЕОНОВЫМ СЛЕДОМ */
+        /* 3D ПОЛИЦЕЙСКИЙ ТРЕК С ДЛИННЫМ ШЛЕЙФОМ ХЭШТЕГОВ */
         .police-highway {
-            width: 100%; height: 50px; background: #0b0f19;
+            width: 100%; height: 60px; background: #070a14;
             border-bottom: 3px solid var(--accent-color);
             position: relative; overflow: hidden;
             display: flex; align-items: center;
             transition: border-color 0.4s ease;
         }
         .road-line {
-            width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.2);
-            position: absolute; top: 25px; z-index: 1;
+            width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.15);
+            position: absolute; top: 32px; z-index: 1;
         }
         
-        /* 3D ПОЛИЦЕЙСКИЙ ПАТРУЛЬ (ПЕРСПЕКТИВА И СТРУКТУРА) */
+        /* КОРПУС С ЭФФЕКТОМ ГЛУБИНЫ И НАКЛОНА (3D ОБЪЕМ) */
         .animated-cop-car {
-            width: 85px; height: 28px; position: absolute; z-index: 3;
-            left: -120px; animation: patrolDrive 14s linear infinite;
-            transform: perspective(200px) rotateY(-15deg);
+            width: 90px; height: 32px; position: absolute; z-index: 3;
+            left: -350px; animation: patrolDrive 14s linear infinite;
+            transform: perspective(300px) rotateX(10deg) rotateY(-18deg) rotateZ(2deg);
             transform-style: preserve-3d;
         }
         
+        /* Основной 3D каркас машины */
         .car-body {
             width: 100%; height: 100%; background: #ffffff;
-            border-radius: 5px; position: relative;
-            box-shadow: inset -10px 0 15px rgba(0,0,0,0.2), 0 8px 15px rgba(0,0,0,0.6);
+            border-radius: 4px; position: relative;
+            box-shadow: inset -15px -5px 15px rgba(0,0,0,0.3), 0 10px 20px rgba(0,0,0,0.6);
             border-bottom: 4px solid #111;
         }
+        /* Синее оперативное крыло ведомства */
         .car-body::before {
             content: ''; position: absolute; top: 0; left: 0;
-            width: 38px; height: 100%; background: #004499;
-            border-top-left-radius: 5px; border-bottom-left-radius: 5px;
-            box-shadow: inset 5px 0 10px rgba(255,255,255,0.2);
+            width: 42px; height: 100%; background: #004499;
+            border-top-left-radius: 4px; border-bottom-left-radius: 4px;
+            box-shadow: inset 4px 4px 8px rgba(255,255,255,0.2);
+        }
+        /* 3D Крыша автомобиля ДПС */
+        .car-body::after {
+            content: ''; position: absolute; top: -6px; left: 25px;
+            width: 40px; height: 10px; background: #eee;
+            transform: perspective(100px) rotateX(25deg);
+            border-radius: 2px; border: 1px solid #ccc;
+            box-shadow: inset 0 5px 5px rgba(0,0,0,0.1);
         }
 
+        /* Сверкающие 3D спецсигналы */
         .siren-lights {
-            position: absolute; top: -7px; left: 40px;
-            width: 14px; height: 7px; border-radius: 3px;
-            background: #ff3333; animation: flashingSiren 0.3s linear infinite alternate;
-            z-index: 4;
+            position: absolute; top: -11px; left: 42px;
+            width: 16px; height: 6px; border-radius: 2px;
+            background: #ff3333; animation: flashingSiren 0.25s linear infinite alternate;
+            z-index: 5;
         }
         .car-wheels {
-            position: absolute; bottom: -5px; left: 10px; width: 12px; height: 12px; background: #111; border-radius: 50%;
-            border: 2px solid #444; box-shadow: 52px 0 #111, 52px 0 0 2px #444;
+            position: absolute; bottom: -6px; left: 12px; width: 14px; height: 14px; background: #111; border-radius: 50%;
+            border: 2px solid #555; box-shadow: 54px 0 #111, 54px 0 0 2px #555;
         }
 
-        /* ПЛАВНО ВСПЫХИВАЮЩИЙ И ТАЮЩИЙ ШЛЕЙФ #СЛАВАЗАКОНУ ЗА 3D-МАШИНОЙ */
+        /* МНОЖЕСТВЕННЫЙ СВЕТЯЩИЙСЯ НЕОНОВЫЙ ХВОСТ ИЗ ТЕКСТА */
         .car-trail-text {
-            position: absolute; left: -90px; top: 8px;
-            font-size: 11px; font-weight: 900; letter-spacing: 1px;
-            color: #fff; text-shadow: 0 0 8px var(--accent-color), 0 0 15px var(--accent-color);
-            opacity: 0; animation: fadeTrail 0.4s linear infinite alternate;
-            white-space: nowrap; font-family: monospace; z-index: 2;
+            position: absolute; left: -220px; top: 10px;
+            font-size: 11px; font-weight: 900; letter-spacing: 2px;
+            color: #fff; text-shadow: 0 0 6px var(--accent-color), 0 0 12px var(--accent-color), 0 0 20px var(--accent-color);
+            opacity: 0; animation: fadeTrail 0.3s linear infinite alternate;
+            white-space: nowrap; font-family: 'Courier New', monospace; z-index: 2;
         }
 
         @keyframes patrolDrive {
-            0% { left: -120px; }
+            0% { left: -350px; }
             100% { left: 105%; }
         }
         @keyframes flashingSiren {
-            0% { background: #ff3333; box-shadow: -20px 0 25px #ff3333, 20px 0 25px #3333ff; }
-            100% { background: #3333ff; box-shadow: -20px 0 25px #3333ff, 20px 0 25px #ff3333; }
+            0% { background: #ff2222; box-shadow: -25px 0 30px #ff2222, 25px 0 30px #2222ff; }
+            100% { background: #2222ff; box-shadow: -25px 0 30px #2222ff, 25px 0 30px #ff2222; }
         }
         @keyframes fadeTrail {
-            0% { opacity: 0.4; transform: translateX(-3px); }
-            100% { opacity: 1; transform: translateX(0); }
+            0% { opacity: 0.5; transform: translateX(-4px) scaleY(0.95); }
+            100% { opacity: 1; transform: translateX(0) scaleY(1.05); }
         }
 
         header {
@@ -206,15 +217,15 @@
 </head>
 <body class="theme-blue">
 
-<!-- ТРЕК С ОБЪЕМНОЙ 3D ПОЛИЦЕЙСКОЙ МАШИНОЙ И ШЛЕЙФОМ -->
+<!-- ТРЕК С ОБЪЕМНОЙ 3D ПОЛИЦЕЙСКОЙ МАШИНОЙ И ДЛИННЫМ ХВОСТОМ -->
 <div class="police-highway">
     <div class="road-line"></div>
     <div class="animated-cop-car">
         <div class="siren-lights"></div>
         <div class="car-body"></div>
         <div class="car-wheels"></div>
-        <!-- Неоновый шлейф привязан прямо за корпусом машины -->
-        <div class="car-trail-text">#СлаваЗакону</div>
+        <!-- Длинный неоновый шлейф хэштегов за машиной -->
+        <div class="car-trail-text">#СлаваЗакону #УСБ #МВД #78 #ЗаконИПорядок</div>
     </div>
 </div>
 
@@ -282,8 +293,8 @@
                 <button id="submit-civil-btn">Направить обращение в ведомство</button>
             </div>
             
-            <!-- РЕЕСТР ЗАКРЫТ ДЛЯ ОБЫЧНЫХ ГРАЖДАНСКИХ ИГРОКОВ -->
-            <div class="panel" id="civils-panel-block" style="display: none;">
+            <!-- РЕЕСТР ДЛЯ СЛУЖЕБНОГО ПОЛЬЗОВАНИЯ -->
+            <div class="panel" id="civils-panel-block" style="display: none !important;">
                 <h2>Реестр зарегистрированных обращений граждан [СЕКРЕТНО]</h2>
                 <div id="civils-feed"></div>
             </div>
@@ -329,7 +340,7 @@
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
             <h4>Управление режимом Дежурной Части</h4>
             <select id="dc-status-select">
-                <option value="open">🟢 Прием обращений открыт (Штатный режим)</option>
+                <option value="open">🟢 Прием обращений открыт (Штатный regime)</option>
                 <option value="fortress">🔴 Режим ограничений / План «Крепость»</option>
             </select>
             <h4>Управление данными Руководства</h4>
@@ -342,7 +353,7 @@
             <h4>Внести в Федеральный Розыск</h4>
             <input type="text" id="wanted-name" placeholder="ФИО подозреваемого игрока">
             <input type="text" id="wanted-reason" placeholder="Статья УК РФ">
-            <button class="btn-danger" id="create-wanted-btn">Объявить in розыск</button>
+            <button class="btn-danger" id="create-wanted-btn">Объявить в розыск</button>
         </div>
 
         <!-- СЛУЖЕБНАЯ ОНЛАЙН-РАЦИЯ -->
@@ -362,24 +373,24 @@
     </div>
 </div>
 
-<!-- ПОДКЛЮЧЕНИЕ ОФИЦИАЛЬНЫХ СЕТЕВЫХ СЕРВЕРОВ GOOGLE FIREBASE -->
+<!-- ПОДКЛЮЧЕНИЕ СЕРВЕРОВ GOOGLE FIREBASE -->
 <script src="https://gstatic.com"></script>
 <script src="https://gstatic.com"></script>
 
 <script>
-    // ТВОИ НАСТОЯЩИЕ КЛЮЧИ СВЯЗИ С СЕРВЕРОМ GOOGLE
+    // ТВОИ НАСТОЯЩИЕ ПРОВЕРЕННЫЕ КЛЮЧИ СВЯЗИ С СЕРВЕРОМ GOOGLE
     const firebaseConfig = {
         apiKey: "AIzaSyAZRGemTe5m4GMyruvDLl3Jlndpjkb9MT4",
-        authDomain: "usb-mvd-web-18868.firebaseapp.com",
+        authDomain: "://firebaseapp.com",
         projectId: "usb-mvd-web-18868",
         storageBucket: "usb-mvd-web-18868.firebasestorage.app",
         messagingSenderId: "42902396272",
         appId: "1:42902396272:web:a09c2f578de739808203b5",
         measurementId: "G-JCE5EL667D",
-        databaseURL: "https://firebaseio.com" // Твой личный адрес базы данных
+        databaseURL: "https://firebaseio.com"
     };
 
-    // Запуск защищенного соединения с сервером Google
+    // Инициализация защищенного сетевого буфера
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -390,8 +401,9 @@
         users: [{username: "IgnatebaAE", pass: "USBMVD_78_2026", rank: "Начальник Управления собственной безопасности [Основатель]", role: "chief"}]
     };
 
-    // ОБРАБОТЧИК ИНТЕРФЕЙСА (Vanilla JS)
+    // ОБРАБОТЧИК ИНТЕРФЕЙСА (Чистый Vanilla JS без JQuery конфликтов)
     document.addEventListener("DOMContentLoaded", () => {
+        // Переключатель дизайнов сайта фракции
         const themeChanger = document.getElementById("theme-changer");
         if(themeChanger) {
             themeChanger.addEventListener("change", (e) => {
@@ -405,6 +417,7 @@
             }
         }
 
+        // Кнопки навигации по вкладкам портала УСБ
         const tabButtons = {
             'btn-press': 'tab-press',
             'btn-civilians': 'tab-civilians',
@@ -415,7 +428,7 @@
             const btnEl = document.getElementById(btnId);
             if(btnEl) {
                 btnEl.addEventListener("click", function() {
-                    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove('active'));
                     document.querySelectorAll(".tab-content").forEach(t => t.style.setProperty('display', 'none', 'important'));
                     this.classList.add("active");
                     document.getElementById(tabButtons[btnId]).style.setProperty('display', 'block', 'important');
@@ -423,6 +436,7 @@
             }
         });
 
+        // Кнопка ФЗ и нормативно-правовой базы
         const btnLaws = document.getElementById("btn-laws");
         if(btnLaws) {
             btnLaws.addEventListener("click", () => {
@@ -431,6 +445,7 @@
             });
         }
 
+        // Регистрация кликов на кнопки управления формами
         document.getElementById("login-submit-btn").addEventListener("click", login);
         document.getElementById("logout-btn").addEventListener("click", logout);
         document.getElementById("submit-civil-btn").addEventListener("click", submitCivilForm);
@@ -447,7 +462,7 @@
             });
         }
 
-        // ЖИВЫЕ СЛУШАТЕЛИ СЕРВЕРА GOOGLE
+        // ЖИВЫЕ СЛУШАТЕЛИ СЕРВЕРА GOOGLE FIREBASE
         db.ref('chief').on('value', (snapshot) => {
             localDB.chief = snapshot.val() || 'Полковник УСБ Игнатьева А.Е.';
             document.getElementById('display-chief').innerText = localDB.chief;
@@ -669,15 +684,30 @@
     function globalDelete(path, key) {
         if(!confirm('Вы действительно хотите удалить эту запись из базы данных?')) return;
         db.ref(path).child(key).remove();
-    }
 
-    function applyDcStatus(status) {
-        const dot = document.getElementById('dc-status-dot');
-        const text = document.getElementById('dc-status-text');
-        if(!dot || !text) return;
-        if(status === 'open') { dot.style.backgroundColor = 'var(--success-green)'; text.innerText = 'Прием обращений [ИГРА]'; }
-        else { dot.style.backgroundColor = 'var(--alert-red)'; text.innerText = 'Режим ограничений [ФРАКЦИЯ]'; }
+/**
+ * Обновляет статус приема обращений на странице.
+ * @param {string} status - Текущий статус ('open' или любой другой).
+ */
+function applyDcStatus(status) {
+    // Находим элементы точки и текста в DOM
+    const dot = document.getElementById('dc-status-dot');
+    const text = document.getElementById('dc-status-text');
+
+    // Если хотя бы один элемент не найден, прерываем выполнение функции
+    if (!dot || !text) return;
+
+    // Меняем стили и текст в зависимости от статуса
+    if (status === 'open') {
+        dot.style.backgroundColor = 'var(--success-green)';
+        text.innerText = 'Прием обращений [ИГРА]';
+    } else {
+        dot.style.backgroundColor = 'var(--alert-red)';
+        text.innerText = 'Режим ограничений [ФРАКЦИЯ]';
     }
+}
+
 </script>
 </body>
 </html>
+
