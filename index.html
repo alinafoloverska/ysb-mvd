@@ -3,71 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>УСБ ГУ МВД России по г. Санкт-Петербургу и ЛО</title>
+    <title>УСБ ГУ МВД России по г. Санкт-Петербургу и ЛО [PROVINCE / ROBLOX RP]</title>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #020617 0%, #0f172a 50%, #1e293b 100%);
-            --glass-bg: rgba(15, 23, 42, 0.75);
-            --glass-border: rgba(59, 130, 246, 0.2);
-            --accent-blue: #3b82f6;
-            --accent-cyan: #06b6d4;
-            --neon-blue: 0 0 20px rgba(59, 130, 246, 0.4);
-            --alert-red: #ef4444;
-            --alert-glow: 0 0 20px rgba(239, 68, 68, 0.5);
-            --success-green: #10b981;
-            --success-glow: 0 0 20px rgba(16, 185, 129, 0.4);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --police-dark: #0a1128;
+            --police-blue: #1c3144;
+            --police-light: #0074d9;
+            --mvd-gold: #f2c94c;
+            --alert-red: #d9534f;
+            --success-green: #2ecc71;
+            --text-light: #f4f5f7;
+            --text-muted: #a0aec0;
+            --glass-panel: rgba(10, 17, 40, 0.9);
         }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
             background-attachment: fixed;
-            color: var(--text-main);
+            color: var(--text-light);
             margin: 0; padding: 0;
             overflow-x: hidden;
         }
 
+        /* АНИМИРОВАННЫЙ ТРЕК С ПОЛИЦЕЙСКОЙ МАШИНОЙ */
+        .police-highway {
+            width: 100%; height: 45px; background: #111;
+            border-bottom: 3px solid var(--police-light);
+            position: relative; overflow: hidden;
+            display: flex; align-items: center;
+        }
+        .road-line {
+            width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.3);
+            position: absolute; top: 22px; z-index: 1;
+        }
+        .animated-cop-car {
+            width: 75px; height: 30px; background: #fff;
+            border-radius: 4px; position: absolute; z-index: 2;
+            left: -100px; animation: patrolDrive 14s linear infinite;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-bottom: 4px solid #000;
+        }
+        .animated-cop-car::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 35px; height: 100%; background: var(--police-blue);
+            border-top-left-radius: 4px; border-bottom-left-radius: 4px;
+        }
+        /* Проблесковый маячок (Мигалка) */
+        .siren-lights {
+            position: absolute; top: -6px; left: 32px;
+            width: 12px; height: 6px; border-radius: 2px;
+            background: #ff3333; animation: flashingSiren 0.3s linear infinite alternate;
+        }
+        .car-wheels {
+            position: absolute; bottom: -3px; left: 8px; width: 10px; height: 10px; background: #222; border-radius: 50%;
+            box-shadow: 48px 0 #222;
+        }
+
+        @keyframes patrolDrive {
+            0% { left: -100px; }
+            100% { left: 105%; }
+        }
+        @keyframes flashingSiren {
+            0% { background: #ff3333; box-shadow: -15px 0 20px #ff3333, 15px 0 20px #3333ff; }
+            100% { background: #3333ff; box-shadow: -15px 0 20px #3333ff, 15px 0 20px #ff3333; }
+        }
+
         header {
-            background: linear-gradient(180deg, rgba(2, 6, 23, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
-            border-bottom: 2px solid var(--accent-blue);
-            box-shadow: var(--neon-blue);
-            padding: 35px 20px; text-align: center;
-            position: relative;
+            background: linear-gradient(180deg, rgba(5, 10, 24, 0.95) 0%, rgba(10, 17, 40, 0.85) 100%);
+            border-bottom: 3px solid var(--mvd-gold);
+            padding: 30px 20px; text-align: center; position: relative;
             backdrop-filter: blur(10px);
         }
         .mvd-logo {
-            width: 95px; height: auto; margin-bottom: 12px;
-            filter: drop-shadow(0 0 12px rgba(255,255,255,0.25));
+            width: 85px; height: auto; margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(242, 201, 76, 0.3));
         }
-        header h1 { margin: 5px 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        header p { margin: 5px 0; color: var(--text-muted); font-size: 14px; font-weight: 400; letter-spacing: 1px; }
+        header h1 { margin: 5px 0; font-size: 25px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; color: #fff; }
+        header p { margin: 5px 0; color: var(--text-muted); font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
         
         .chief-badge {
-            background: rgba(0, 0, 0, 0.5); border: 1px solid var(--accent-blue);
-            display: inline-block; padding: 8px 20px; border-radius: 30px; margin-top: 15px; font-size: 13px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--mvd-gold);
+            display: inline-block; padding: 8px 22px; border-radius: 4px; margin-top: 15px; font-size: 13px; color: var(--mvd-gold); font-weight: bold;
         }
 
         .status-ticker {
             position: absolute; top: 20px; right: 20px;
-            background: rgba(0,0,0,0.4); border: 1px solid var(--success-green);
-            padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: bold;
-            display: flex; align-items: center; gap: 8px; box-shadow: var(--success-glow);
+            background: rgba(0,0,0,0.5); border: 1px solid var(--success-green);
+            padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold;
+            display: flex; align-items: center; gap: 8px;
         }
         .status-dot { width: 8px; height: 8px; background: var(--success-green); border-radius: 50%; }
 
         nav {
-            background: rgba(2, 6, 23, 0.8); padding: 12px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
-            border-bottom: 1px solid var(--glass-border);
+            background: #070d1f; padding: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .nav-btn {
-            background: rgba(59, 130, 246, 0.05); border: 1px solid var(--glass-border); color: var(--text-main);
-            padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.3s ease;
+            background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);
+            padding: 9px 20px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; text-transform: uppercase; transition: all 0.2s ease;
         }
         .nav-btn:hover, .nav-btn.active { 
-            background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%); 
-            box-shadow: var(--neon-blue); border-color: #60a5fa;
+            background: var(--police-blue); border-color: var(--mvd-gold); color: var(--mvd-gold);
         }
 
         .container { display: flex; max-width: 1500px; margin: 25px auto; padding: 0 20px; gap: 25px; }
@@ -75,59 +112,61 @@
         .sidebar { flex: 1.1; display: flex; flex-direction: column; gap: 25px; }
 
         .panel {
-            background: var(--glass-bg); backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border); border-radius: 12px; padding: 22px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            background: var(--glass-panel); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid var(--police-light);
         }
-        .panel h2 { margin-top: 0; font-size: 16px; text-transform: uppercase; border-bottom: 2px solid var(--accent-blue); padding-bottom: 8px; letter-spacing: 1.5px; font-weight: 700; color: #fff; }
+        .panel h2 { margin-top: 0; font-size: 15px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; letter-spacing: 1px; font-weight: 700; color: #fff; }
         
-        .laws-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 5px; }
-        .law-card { background: rgba(2, 6, 23, 0.4); border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; text-align: center; font-size: 13px; }
-        .law-card a { color: var(--accent-cyan); text-decoration: none; font-weight: bold; display: block; margin-top: 6px; }
+        .laws-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .law-card { background: #070d1f; border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; text-align: center; font-size: 12px; }
+        .law-card a { color: var(--mvd-gold); text-decoration: none; font-weight: bold; display: block; margin-top: 6px; }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .card {
-            background: rgba(30, 41, 59, 0.4); border: 1px solid rgba(255,255,255,0.05);
-            border-left: 5px solid var(--accent-blue); padding: 20px; border-radius: 8px; margin-bottom: 18px; position: relative;
+            background: #0e1730; border: 1px solid rgba(255,255,255,0.05);
+            border-left: 4px solid var(--police-light); padding: 18px; border-radius: 4px; margin-bottom: 15px; position: relative;
         }
-        .card.alert-card { border-left-color: var(--alert-red); background: rgba(220, 38, 38, 0.05); }
-        .card.case-card { border-left-color: #a855f7; }
+        .card.alert-card { border-left-color: var(--alert-red); background: rgba(217, 83, 79, 0.03); }
+        .card.case-card { border-left-color: #9b59b6; }
 
         input, textarea, select, button {
-            width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
-            background: rgba(2, 6, 23, 0.7); border: 1px solid var(--glass-border); color: #fff; border-radius: 6px; font-size: 13px;
+            width: 100%; padding: 11px; margin: 8px 0; box-sizing: border-box;
+            background: #050a18; border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 4px; font-size: 13px;
         }
-        button { background: linear-gradient(90deg, var(--accent-blue) 0%, #1d4ed8 100%); border: none; font-weight: 700; cursor: pointer; text-transform: uppercase; }
-        button:hover { filter: brightness(1.1); box-shadow: var(--neon-blue); }
-        .btn-danger { background: linear-gradient(90deg, var(--alert-red) 0%, #b91c1c 100%); }
+        button { background: var(--police-blue); border: 1px solid var(--mvd-gold); color: var(--mvd-gold); font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { background: var(--police-light); color: #fff; }
+        .btn-danger { background: rgba(217, 83, 79, 0.2); border-color: var(--alert-red); color: var(--alert-red); }
+        .btn-danger:hover { background: var(--alert-red); color: #fff; }
 
-        .delete-btn {
-            position: absolute; top: 15px; right: 15px; background: rgba(239, 68, 68, 0.1);
-            color: var(--alert-red); border: 1px solid var(--alert-red); border-radius: 4px;
-            padding: 4px 10px; font-size: 11px; width: auto; margin: 0; cursor: pointer; display: none;
-        }
-
-        .auth-status { background: rgba(2, 6, 23, 0.5); padding: 10px; border-radius: 6px; text-align: center; font-size: 13px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .auth-status { background: #050a18; padding: 10px; border-radius: 4px; text-align: center; font-size: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); font-weight: bold; }
         .hidden-panel { display: none; }
         .database-list { list-style: none; padding: 0; margin: 0; }
-        .database-list li { background: rgba(2, 6, 23, 0.3); padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; display: flex; justify-content: space-between; align-items: center; border-radius: 4px; margin-bottom: 4px; }
+        .database-list li { background: #050a18; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; border-radius: 4px; }
         
-        .badge { padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
-        .badge.red { background: rgba(239,68,68,0.2); color: var(--alert-red); border: 1px solid var(--alert-red); }
-        .badge.green { background: rgba(16,185,129,0.2); color: var(--success-green); border: 1px solid var(--success-green); }
-        .badge.blue { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid var(--accent-blue); }
-        .badge.purple { background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid #a855f7; }
+        .badge { padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .badge.red { background: rgba(217,83,79,0.15); color: var(--alert-red); border: 1px solid var(--alert-red); }
+        .badge.green { background: rgba(46,204,113,0.15); color: var(--success-green); border: 1px solid var(--success-green); }
+        .badge.blue { background: rgba(0,116,217,0.15); color: #60a5fa; border: 1px solid var(--police-light); }
 
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .info-box { background: rgba(2,6,23,0.4); padding: 12px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.03); }
-        .info-box h4 { margin: 0 0 5px 0; color: #fff; font-size: 14px; }
+        .info-box { background: #070d1f; padding: 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        .info-box h4 { margin: 0 0 5px 0; color: var(--mvd-gold); font-size: 13px; text-transform: uppercase; }
         .info-box p { margin: 0; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
 
 <body>
+
+<!-- ТРЕК С АНИМИРОВАННОЙ ПОЛИЦЕЙСКОЙ МАШИНОЙ -->
+<div class="police-highway">
+    <div class="road-line"></div>
+    <div class="animated-cop-car">
+        <div class="siren-lights"></div>
+        <div class="car-wheels"></div>
+    </div>
+</div>
 
 <header>
     <div class="status-ticker" id="dc-status-block">
@@ -136,8 +175,8 @@
     </div>
     <img class="mvd-logo" src="https://postimg.cc" alt="Герб МВД России">
     <h1>Управление собственной безопасности ГУ МВД России</h1>
-    <p>по г. Санкт-Петербургу и Ленинградской области • Официальный интерактивный портал</p>
-    <div class="chief-badge">Руководитель подразделения: <strong id="display-chief">Полковник УСБ Игнатьева А.Е.</strong></div>
+    <p>по г. Санкт-Петербургу и Ленинградской области • Игровой портал фракции [PROVINCE / ROBLOX RP]</p>
+    <div class="chief-badge">Руководитель подразделения: <strong id="display-chief">Полковник УСБ Игнатьева A.E.</strong></div>
 </header>
 
 <nav>
@@ -172,7 +211,7 @@
 
         <div id="tab-civilians" class="tab-content">
             <div class="panel" style="margin-bottom: 20px;">
-                <h2>Форма подачи заявления / рапорта</h2>
+                <h2>Форма подачи заявления / рапорта фракции</h2>
                 <select id="civ-type">
                     <option value="Жалоба о коррупции">Заявление о факте коррупции / должностных нарушениях</option>
                     <option value="Рапорт на контракт">Рапорт на зачисление в ряды УСБ (Контракт)</option>
@@ -182,7 +221,7 @@
                     <input type="text" id="civ-contact" placeholder="Жетон / Discord / Телефон для связи">
                 </div>
                 <textarea id="civ-text" style="height: 120px;" placeholder="Изложите суть ситуации во всех подробностях..."></textarea>
-                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (YouTube / Imgur)">
+                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (YouTube / Imgur)"></textarea>
                 <button onclick="submitCivilForm()">Направить обращение в ведомство</button>
             </div>
             <div class="panel">
@@ -190,12 +229,13 @@
                 <div id="civils-feed"></div>
             </div>
         </div>
+
         <div id="tab-evidence" class="tab-content">
             <div class="panel">
                 <h2>Секретный ведомственный архив уголовных дел</h2>
                 <p id="evidence-locked-msg" style="color: var(--alert-red); font-weight: bold; text-align: center; padding: 20px 0;">[ДОСТУП ОГРАНИЧЕН. ТРЕБУЕТСЯ СЛУЖЕБНАЯ АВТОРИЗАЦИЯ И ЭЛЕКТРОННЫЙ ЖЕТОН]</p>
                 <div id="evidence-content" style="display: none;">
-                    <div style="background: rgba(2, 6, 23, 0.4); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--accent-blue);">
+                    <div style="background: rgba(2, 6, 23, 0.4); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--police-light);">
                         <h4>Регистрация нового следственного дела / улик</h4>
                         <div class="info-grid" style="margin: 0 0 8px 0; grid-template-columns: 1.5fr 1fr;">
                             <input type="text" id="ev-case" placeholder="Уголовное дело № (Например: Дело №12-УСБ)">
@@ -246,10 +286,10 @@
             <button class="btn-danger" onclick="createWanted()">Объявить в розыск</button>
         </div>
 
-        <!-- ОНЛАЙН СЛУЖЕБНАЯ РАЦИЯ -->
+        <!-- ОНЛАЙН СЛУЖЕБНАЯ РАЦИЯ ВЕДОМСТВА -->
         <div class="panel">
             <h2>📻 Служебная рация УСБ [ОНЛАЙН]</h2>
-            <div id="chat-box" style="height: 180px; overflow-y: auto; background: rgba(2, 6, 23, 0.5); padding: 10px; border-radius: 6px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
+            <div id="chat-box" style="height: 180px; overflow-y: auto; background: #050a18; padding: 10px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
             <div style="display: flex; gap: 6px;">
                 <input type="text" id="chat-nick" placeholder="Позывной" style="width: 35%; margin: 0; padding: 6px;">
                 <input type="text" id="chat-msg" placeholder="Текст..." style="width: 65%; margin: 0; padding: 6px;" onkeydown="if(event.key==='Enter') sendChatMessage()">
@@ -266,15 +306,16 @@
 <script src="https://cloudflare.com"></script>
 
 <script>
-    const NETWORK_CHANNEL = "usb_mvd_spb_ignateva_2026_fixed";
-    const CHAT_CHANNEL = "usb_mvd_spb_chat_room_2026_fixed";
+    // Уникальные новые каналы для чистой загрузки данных
+    const NETWORK_CHANNEL = "usb_mvd_spb_ign_final_2026_v2";
+    const CHAT_CHANNEL = "usb_mvd_spb_chat_final_2026_v2";
 
     let activeUser = null;
     let localDB = {
         chief: 'Полковник УСБ Игнатьева А.Е.',
         dc_status: 'open',
         news: [],
-        wanted: [{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава [Roblox RP]"}],
+        wanted: [{name:"Игрок Vasya_Pupkin", reason:"Нарушение устава фракции"}],
         civils: [],
         evidence: [],
         users: [{username: "IgnatebaAE", pass: "USBMVD_78_2026", rank: "Начальник Управления собственной безопасности [Основатель]", role: "chief"}]
@@ -283,20 +324,20 @@
 
     window.onload = function() {
         const disclaimer = document.createElement('div');
-        disclaimer.style.cssText = "background:rgba(239,68,68,0.15); border:1px solid #ef4444; padding:10px; text-align:center; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1px; margin-bottom:15px; border-radius:6px;";
-        disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРА). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
+        disclaimer.style.cssText = "background:rgba(239,68,68,0.15); border:1px solid #ef4444; padding:10px; text-align:center; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1px; margin-bottom:15px; border-radius:4px;";
+        disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРОВ PROVINCE / ROBLOX). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
         document.body.insertBefore(disclaimer, document.body.firstChild);
 
         loadNetworkData();
         loadChatMessages();
-        setInterval(loadNetworkData, 3000);
-        setInterval(loadChatMessages, 2000);
+        setInterval(loadNetworkData, 4000);
+        setInterval(loadChatMessages, 2500);
     };
 
     function loadNetworkData() {
         $.get(`https://dweet.cc{NETWORK_CHANNEL}`, function(res) {
-            if(res && res.with && res.with[0] && res.with[0].content) {
-                const serverData = res.with[0].content;
+            if(res && res.with && res.with && res.with.content) {
+                const serverData = res.with.content;
                 if(serverData.civils) localDB.civils = serverData.civils;
                 if(serverData.news) localDB.news = serverData.news;
                 if(serverData.wanted) localDB.wanted = serverData.wanted;
@@ -305,7 +346,7 @@
                 if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
             }
             renderAll();
-        }).fail(function() { renderAll(); });
+        }).fail(function() { renderAll(); }); // Защита: если сервер упал, сайт не виснет
     }
 
     function saveNetworkData() {
@@ -314,8 +355,8 @@
 
     function loadChatMessages() {
         $.get(`https://dweet.cc{CHAT_CHANNEL}`, function(res) {
-            if(res && res.with && res.with[0] && res.with[0].content && res.with[0].content.messages) {
-                chatHistory = res.with[0].content.messages;
+            if(res && res.with && res.with && res.with.content && res.with.content.messages) {
+                chatHistory = res.with.content.messages;
                 renderChat();
             }
         });
@@ -346,11 +387,12 @@
         if(!box) return;
         box.innerHTML = '';
         chatHistory.forEach(m => {
-            const color = m.sender === "IgnatebaAE" ? "var(--alert-red)" : "var(--accent-cyan)";
+            const color = m.sender === "IgnatebaAE" ? "var(--alert-red)" : "var(--mvd-gold)";
             box.innerHTML += `<div><span style="color: var(--text-muted); font-size: 10px;">[${m.time}]</span> <strong style="color: ${color}">${m.sender}:</strong> <span style="color: #fff">${m.text}</span></div>`;
         });
         box.scrollTop = box.scrollHeight;
     }
+
     function renderAll() {
         document.getElementById('display-chief').innerText = localDB.chief;
         const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
@@ -362,7 +404,7 @@
                 feed.innerHTML += `<div class="card">
                     ${canEdit ? `<button onclick="deleteItem('news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
                     <h3>${item.title}</h3>
-                    <p><small>Дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
+                    <p><small>Игровая дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
                     <p>${item.text}</p>
                 </div>`;
             });
@@ -377,8 +419,8 @@
                     <h3>${item.type} (Игрок: ${item.fio})</h3>
                     <p><strong>Связь:</strong> ${item.contact}</p>
                     <p>${item.text}</p>
-                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Доказательства</a></p>`:''}
-                    <span class="badge blue">RP-Статус: На рассмотрении</span>
+                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--mvd-gold); font-weight:bold;">🔗 Доказательства / Видеофиксация</a></p>`:''}
+                    <span class="badge blue">RP-Статус: На рассмотрении руководства</span>
                 </div>`;
             });
         }
@@ -395,7 +437,7 @@
         if(activeUser && evFeed) {
             evFeed.innerHTML = localDB.evidence.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Следственные дела отсутствуют.</p>' : '';
             localDB.evidence.forEach((item, idx) => {
-                evFeed.innerHTML += `<div class="card case-card">
+                evFeed.innerHTML += `Template literals: <div class="card case-card">
                     ${canEdit ? `<button onclick="deleteItem('evidence', ${idx})" class="btn-danger delete-btn" style="display:block;">Стереть</button>` : ''}
                     <h3>Материалы: ${item.case}</h3>
                     <p><small>Следователь: <strong>${item.by}</strong></small></p>
@@ -424,7 +466,7 @@
             renderAll();
             alert(`Вход выполнен успешно, товарищ Полковник!`);
         } else {
-            alert('ОТКАЗ В ДОСТУПЕ! Неверный логин или пароль.');
+            alert('ОТКАЗ В ДОСТУПЕ! Проверьте игровой логин или пароль.');
         }
     }
 
@@ -447,7 +489,7 @@
         const text = document.getElementById('civ-text').value.trim();
         const proof = document.getElementById('civ-proof').value.trim();
 
-        if(!fio || !text || !contact) return alert('Пожалуйста, заполните форму полностью!');
+        if(!fio || !text || !contact) return alert('Пожалуйста, заполните форму рапорта полностью!');
 
         localDB.civils.unshift({type, fio, contact, text, proof});
         saveNetworkData();
@@ -456,7 +498,7 @@
         document.getElementById('civ-contact').value = '';
         document.getElementById('civ-text').value = '';
         document.getElementById('civ-proof').value = '';
-        alert('Заявление успешно отправлено!');
+        alert('Рапорт / Обращение успешно направлено дежурному УСБ!');
     }
 
     function changeChiefName() {
@@ -465,7 +507,7 @@
         localDB.chief = name;
         saveNetworkData();
         document.getElementById('new-chief-name').value = '';
-        alert('Данные руководителя обновлены.');
+        alert('Данные руководителя фракции обновлены.');
     }
 
     function changeDcStatus() {
@@ -476,16 +518,16 @@
     function createWanted() {
         const name = document.getElementById('wanted-name').value.trim();
         const reason = document.getElementById('wanted-reason').value.trim();
-        if(!name || !reason) return alert('Заполните карточку розыска!');
+        if(!name || !reason) return alert('Заполните карточку розыска подозреваемого!');
         localDB.wanted.unshift({name, reason});
         saveNetworkData();
         document.getElementById('wanted-name').value = '';
         document.getElementById('wanted-reason').value = '';
-        alert('Игрок объявлен в розыск.');
+        alert('Подозреваемый успешно внесен в Федеральный Розыск МВД!');
     }
 
     function deleteItem(dbKey, index) {
-        if(!confirm('Удалить запись с сервера?')) return;
+        if(!confirm('Вы действительно хотите удалить эту запись?')) return;
         localDB[dbKey].splice(index, 1);
         saveNetworkData();
     }
@@ -496,6 +538,21 @@
         if(!dot || !text) return;
         if(status === 'open') { dot.style.backgroundColor = 'var(--success-green)'; text.innerText = 'Прием обращений [ИГРА]'; }
         else { dot.style.backgroundColor = 'var(--alert-red)'; text.innerText = 'Режим ограничений [ФРАКЦИЯ]'; }
+    }
+
+    function addEvidence() {
+        const caseName = document.getElementById('ev-case').value.trim();
+        const status = document.getElementById('ev-status').value;
+        const desc = document.getElementById('ev-desc').value.trim();
+        if(!caseName || !desc) return alert('Заполните данные дела!');
+
+        const authorSignature = `${activeUser.username}`;
+        localDB.evidence.unshift({case: caseName, status, desc, by: authorSignature});
+        saveNetworkData();
+
+        document.getElementById('ev-case').value = '';
+        document.getElementById('ev-desc').value = '';
+        alert('Следственное дело запечатано и внесено в реестр!');
     }
 
     function switchTab(tabId, btn) {
