@@ -5,33 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>УСБ ГУ МВД России по г. Санкт-Петербургу и ЛО [PROVINCE / ROBLOX RP]</title>
     <style>
+        /* БАЗОВЫЕ НАСТРОЙКИ СТИЛЕЙ И ТЕМ ОФОРМЛЕНИЯ */
         :root {
-            --police-dark: #0a1128;
-            --police-blue: #1c3144;
-            --police-light: #0074d9;
+            --bg-gradient: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
+            --panel-bg: rgba(10, 17, 40, 0.9);
+            --accent-color: #0074d9;
             --mvd-gold: #f2c94c;
             --alert-red: #d9534f;
             --success-green: #2ecc71;
             --text-light: #f4f5f7;
             --text-muted: #a0aec0;
-            --glass-panel: rgba(10, 17, 40, 0.9);
+        }
+
+        /* Синяя тема (По умолчанию) */
+        body.theme-blue {
+            --bg-gradient: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
+            --panel-bg: rgba(10, 17, 40, 0.9);
+            --accent-color: #0074d9;
+        }
+
+        /* Фиолетовая тема */
+        body.theme-purple {
+            --bg-gradient: linear-gradient(135deg, #0f051d 0%, #180a2b 50%, #2c104e 100%);
+            --panel-bg: rgba(24, 10, 43, 0.9);
+            --accent-color: #a855f7;
+        }
+
+        /* Черная тема */
+        body.theme-black {
+            --bg-gradient: linear-gradient(135deg, #020205 0%, #0a0a0f 50%, #14141a 100%);
+            --panel-bg: rgba(15, 15, 20, 0.95);
+            --accent-color: #475569;
         }
 
         body {
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
+            background: var(--bg-gradient);
             background-attachment: fixed;
             color: var(--text-light);
             margin: 0; padding: 0;
             overflow-x: hidden;
+            transition: background 0.4s ease;
         }
 
         /* АНИМИРОВАННЫЙ ТРЕК С ПОЛИЦЕЙСКОЙ МАШИНОЙ */
         .police-highway {
             width: 100%; height: 45px; background: #111;
-            border-bottom: 3px solid var(--police-light);
+            border-bottom: 3px solid var(--accent-color);
             position: relative; overflow: hidden;
             display: flex; align-items: center;
+            transition: border-color 0.4s ease;
         }
         .road-line {
             width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.3);
@@ -46,10 +69,9 @@
         }
         .animated-cop-car::before {
             content: ''; position: absolute; top: 0; left: 0;
-            width: 35px; height: 100%; background: var(--police-blue);
+            width: 35px; height: 100%; background: #1c3144;
             border-top-left-radius: 4px; border-bottom-left-radius: 4px;
         }
-        /* Проблесковый маячок (Мигалка) */
         .siren-lights {
             position: absolute; top: -6px; left: 32px;
             width: 12px; height: 6px; border-radius: 2px;
@@ -96,7 +118,7 @@
         .status-dot { width: 8px; height: 8px; background: var(--success-green); border-radius: 50%; }
 
         nav {
-            background: #070d1f; padding: 10px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+            background: #070d1f; padding: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .nav-btn {
@@ -104,7 +126,14 @@
             padding: 9px 20px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; text-transform: uppercase; transition: all 0.2s ease;
         }
         .nav-btn:hover, .nav-btn.active { 
-            background: var(--police-blue); border-color: var(--mvd-gold); color: var(--mvd-gold);
+            background: rgba(255,255,255,0.05); border-color: var(--accent-color); color: var(--text-light);
+        }
+
+        /* Выпадающий список выбора дизайна */
+        .theme-select-block {
+            background: #050a18; border: 1px solid var(--mvd-gold); color: var(--mvd-gold);
+            padding: 7px 12px; border-radius: 4px; font-size: 11px; font-weight: bold;
+            text-transform: uppercase; width: auto; max-width: 180px; cursor: pointer; margin: 0;
         }
 
         .container { display: flex; max-width: 1500px; margin: 25px auto; padding: 0 20px; gap: 25px; }
@@ -112,8 +141,9 @@
         .sidebar { flex: 1.1; display: flex; flex-direction: column; gap: 25px; }
 
         .panel {
-            background: var(--glass-panel); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid var(--police-light);
+            background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid var(--accent-color);
+            transition: background 0.4s ease, border-color 0.4s ease;
         }
         .panel h2 { margin-top: 0; font-size: 15px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; letter-spacing: 1px; font-weight: 700; color: #fff; }
         
@@ -126,7 +156,7 @@
 
         .card {
             background: #0e1730; border: 1px solid rgba(255,255,255,0.05);
-            border-left: 4px solid var(--police-light); padding: 18px; border-radius: 4px; margin-bottom: 15px; position: relative;
+            border-left: 4px solid var(--accent-color); padding: 18px; border-radius: 4px; margin-bottom: 15px; position: relative;
         }
         .card.alert-card { border-left-color: var(--alert-red); background: rgba(217, 83, 79, 0.03); }
         .card.case-card { border-left-color: #9b59b6; }
@@ -135,8 +165,8 @@
             width: 100%; padding: 11px; margin: 8px 0; box-sizing: border-box;
             background: #050a18; border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 4px; font-size: 13px;
         }
-        button { background: var(--police-blue); border: 1px solid var(--mvd-gold); color: var(--mvd-gold); font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        button:hover { background: var(--police-light); color: #fff; }
+        button { background: rgba(255,255,255,0.03); border: 1px solid var(--mvd-gold); color: var(--mvd-gold); font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
         .btn-danger { background: rgba(217, 83, 79, 0.2); border-color: var(--alert-red); color: var(--alert-red); }
         .btn-danger:hover { background: var(--alert-red); color: #fff; }
 
@@ -148,7 +178,7 @@
         .badge { padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
         .badge.red { background: rgba(217,83,79,0.15); color: var(--alert-red); border: 1px solid var(--alert-red); }
         .badge.green { background: rgba(46,204,113,0.15); color: var(--success-green); border: 1px solid var(--success-green); }
-        .badge.blue { background: rgba(0,116,217,0.15); color: #60a5fa; border: 1px solid var(--police-light); }
+        .badge.blue { background: rgba(0,116,217,0.15); color: #60a5fa; border: 1px solid var(--accent-color); }
 
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
         .info-box { background: #070d1f; padding: 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
@@ -156,9 +186,7 @@
         .info-box p { margin: 0; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
-
-<body>
-
+	
 <!-- ТРЕК С АНИМИРОВАННОЙ ПОЛИЦЕЙСКОЙ МАШИНОЙ -->
 <div class="police-highway">
     <div class="road-line"></div>
@@ -176,14 +204,21 @@
     <img class="mvd-logo" src="https://postimg.cc" alt="Герб МВД России">
     <h1>Управление собственной безопасности ГУ МВД России</h1>
     <p>по г. Санкт-Петербургу и Ленинградской области • Игровой портал фракции [PROVINCE / ROBLOX RP]</p>
-    <div class="chief-badge">Руководитель подразделения: <strong id="display-chief">Полковник УСБ Игнатьева A.E.</strong></div>
+    <div class="chief-badge">Руководитель подразделения: <strong id="display-chief">Полковник УСБ Игнатьева А.Е.</strong></div>
 </header>
 
 <nav>
-    <button class="nav-btn active" onclick="switchTab('tab-press', this)">📰 Пресс-служба и СМИ</button>
-    <button class="nav-btn" onclick="switchTab('tab-civilians', this)">⚖️ Приемная (Подать заявление)</button>
-    <button class="nav-btn" onclick="switchTab('tab-evidence', this)">📁 Дела и Улики (Для сотрудников)</button>
-    <button class="nav-btn" onclick="toggleLaws()">📚 Нормативно-правовая база</button>
+    <button class="nav-btn active" id="btn-press">📰 Пресс-служба и СМИ</button>
+    <button class="nav-btn" id="btn-civilians">⚖️ Приемная (Подать заявление)</button>
+    <button class="nav-btn" id="btn-evidence">📁 Дела и Улики (Для сотрудников)</button>
+    <button class="nav-btn" id="btn-laws">📚 Нормативно-правовая база</button>
+    
+    <!-- ИНТЕРАКТИВНЫЙ ВЫБОР ДИЗАЙНА САЙТА -->
+    <select class="theme-select-block" id="theme-changer">
+        <option value="theme-blue">👮‍♂️ Строгий Синий</option>
+        <option value="theme-purple">🔮 Неоновый Фиолетовый</option>
+        <option value="theme-black">⚔️ Тактический Черный</option>
+    </select>
 </nav>
 
 <div class="container">
@@ -221,8 +256,8 @@
                     <input type="text" id="civ-contact" placeholder="Жетон / Discord / Телефон для связи">
                 </div>
                 <textarea id="civ-text" style="height: 120px;" placeholder="Изложите суть ситуации во всех подробностях..."></textarea>
-                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (YouTube / Imgur)"></textarea>
-                <button onclick="submitCivilForm()">Направить обращение в ведомство</button>
+                <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (YouTube / Imgur)">
+                <button id="submit-civil-btn">Направить обращение в ведомство</button>
             </div>
             <div class="panel">
                 <h2>Реестр зарегистрированных обращений граждан</h2>
@@ -235,7 +270,7 @@
                 <h2>Секретный ведомственный архив уголовных дел</h2>
                 <p id="evidence-locked-msg" style="color: var(--alert-red); font-weight: bold; text-align: center; padding: 20px 0;">[ДОСТУП ОГРАНИЧЕН. ТРЕБУЕТСЯ СЛУЖЕБНАЯ АВТОРИЗАЦИЯ И ЭЛЕКТРОННЫЙ ЖЕТОН]</p>
                 <div id="evidence-content" style="display: none;">
-                    <div style="background: rgba(2, 6, 23, 0.4); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--police-light);">
+                    <div style="background: rgba(2, 6, 23, 0.4); padding: 18px; border-radius: 8px; margin-bottom: 20px; border: 1px dashed var(--accent-color);">
                         <h4>Регистрация нового следственного дела / улик</h4>
                         <div class="info-grid" style="margin: 0 0 8px 0; grid-template-columns: 1.5fr 1fr;">
                             <input type="text" id="ev-case" placeholder="Уголовное дело № (Например: Дело №12-УСБ)">
@@ -245,7 +280,7 @@
                             </select>
                         </div>
                         <textarea id="ev-desc" placeholder="Укажите подробные результаты расследования (ОРМ)..."></textarea>
-                        <button onclick="addEvidence()">Запечатать в архив ведомства</button>
+                        <button id="add-evidence-btn">Запечатать в архив ведомства</button>
                     </div>
                     <div id="evidence-list-feed"></div>
                 </div>
@@ -260,39 +295,37 @@
             <div id="login-form">
                 <input type="text" id="login-username" placeholder="Служебный Логин">
                 <input type="password" id="login-pass" placeholder="Личный пароль">
-                <button onclick="login()">Авторизоваться в ДЧ</button>
+                <button id="login-submit-btn">Авторизоваться в ДЧ</button>
             </div>
-            <button id="logout-btn" class="btn-danger" style="display:none;" onclick="logout()">Завершить дежурство (Выход)</button>
+            <button id="logout-btn" class="btn-danger" style="display:none;">Завершить дежурство (Выход)</button>
         </div>
 
-        <!-- СИТУАЦИОННЫЙ ЦЕНТР СКРЫТ ОТ ГРАЖДАНСКИХ ЛИЦ -->
         <div class="panel hidden-panel" id="chief-panel" style="display: none;">
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
             <h4>Управление режимом Дежурной Части</h4>
-            <select id="dc-status-select" onchange="changeDcStatus()">
+            <select id="dc-status-select">
                 <option value="open">🟢 Прием обращений открыт (Штатный режим)</option>
                 <option value="fortress">🔴 Режим ограничений / План «Крепость»</option>
             </select>
             <h4>Управление данными Руководства</h4>
             <input type="text" id="new-chief-name" placeholder="Новое ФИО и звание Руководителя">
-            <button onclick="changeChiefName()">Обновить реестр</button>
+            <button id="change-chief-btn">Обновить реестр</button>
             <h4>Выпустить официальный пресс-релиз</h4>
             <input type="text" id="post-title" placeholder="Заголовок пресс-релиза">
             <textarea id="post-text" placeholder="Текст официального заявления..."></textarea>
-            <button onclick="createPost()">Опубликовать от имени УСБ</button>
+            <button id="create-post-btn">Опубликовать от имени УСБ</button>
             <h4>Внести в Федеральный Розыск</h4>
             <input type="text" id="wanted-name" placeholder="ФИО подозреваемого игрока">
             <input type="text" id="wanted-reason" placeholder="Статья УК РФ">
-            <button class="btn-danger" onclick="createWanted()">Объявить в розыск</button>
+            <button class="btn-danger" id="create-wanted-btn">Объявить в розыск</button>
         </div>
 
-        <!-- ОНЛАЙН СЛУЖЕБНАЯ РАЦИЯ ВЕДОМСТВА -->
         <div class="panel">
             <h2>📻 Служебная рация УСБ [ОНЛАЙН]</h2>
             <div id="chat-box" style="height: 180px; overflow-y: auto; background: #050a18; padding: 10px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
             <div style="display: flex; gap: 6px;">
                 <input type="text" id="chat-nick" placeholder="Позывной" style="width: 35%; margin: 0; padding: 6px;">
-                <input type="text" id="chat-msg" placeholder="Текст..." style="width: 65%; margin: 0; padding: 6px;" onkeydown="if(event.key==='Enter') sendChatMessage()">
+                <input type="text" id="chat-msg" placeholder="Текст..." style="width: 65%; margin: 0; padding: 6px;">
             </div>
         </div>
 
@@ -303,12 +336,9 @@
     </div>
 </div>
 
-<script src="https://cloudflare.com"></script>
-
-<script>
-    // Уникальные новые каналы для чистой загрузки данных
-    const NETWORK_CHANNEL = "usb_mvd_spb_ign_final_2026_v3";
-    const CHAT_CHANNEL = "usb_mvd_spb_chat_final_2026_v3";
+    // ЧИСТЫЙ JAVASCRIPT БЕЗ КОНФЛИКТНЫХ БИБЛИОТЕК
+    const NETWORK_CHANNEL = "usb_mvd_spb_clean_v1";
+    const CHAT_CHANNEL = "usb_mvd_spb_chat_clean_v1";
 
     let activeUser = null;
     let localDB = {
@@ -322,45 +352,100 @@
     };
     let chatHistory = [];
 
-    window.onload = function() {
-        const disclaimer = document.createElement('div');
-        disclaimer.style.cssText = "background:rgba(239,68,68,0.15); border:1px solid #ef4444; padding:10px; text-align:center; color:#fff; font-size:12px; font-weight:bold; letter-spacing:1px; margin-bottom:15px; border-radius:4px;";
-        disclaimer.innerText = "ВНИМАНИЕ: ДАННЫЙ ПОРТАЛ ЯВЛЯЕТСЯ ВЫМЫШЛЕННЫМ И СОЗДАН ИСКЛЮЧИТЕЛЬНО ДЛЯ ИГРОВЫХ ЦЕЛЕЙ (РОЛЕПЛЕЙ СЕРВЕРОВ PROVINCE / ROBLOX). САЙТ НЕ ИМЕЕТ ОТНОШЕНИЯ К РЕАЛЬНЫМ ВЕДОМСТВАМ МВД РФ.";
-        document.body.insertBefore(disclaimer, document.body.firstChild);
+    // ОБРАБОТЧИК КНОПОК И НАВИГАЦИИ (Vanilla JS)
+    document.addEventListener("DOMContentLoaded", () => {
+        // Переключатель тем оформления
+        const themeChanger = document.getElementById("theme-changer");
+        themeChanger.addEventListener("change", (e) => {
+            document.body.className = e.target.value;
+            localStorage.setItem("mvd-site-theme", e.target.value);
+        });
+        
+        // Загрузка сохранённой темы
+        const savedTheme = localStorage.getItem("mvd-site-theme");
+        if(savedTheme) {
+            document.body.className = savedTheme;
+            themeChanger.value = savedTheme;
+        }
 
+        // Вкладки
+        const tabButtons = {
+            'btn-press': 'tab-press',
+            'btn-civilians': 'tab-civilians',
+            'btn-evidence': 'tab-evidence'
+        };
+
+        Object.keys(tabButtons).forEach(btnId => {
+            document.getElementById(btnId).addEventListener("click", function() {
+                document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+                document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+                this.classList.add("active");
+                document.getElementById(tabButtons[btnId]).classList.add("active");
+            });
+        });
+
+        // Нормативная база
+        document.getElementById("btn-laws").addEventListener("click", () => {
+            const panel = document.getElementById("laws-panel");
+            panel.style.display = panel.style.display === "grid" ? "none" : "grid";
+        });
+
+        // Слушатели кнопок форм
+        document.getElementById("login-submit-btn").addEventListener("click", login);
+        document.getElementById("logout-btn").addEventListener("click", logout);
+        document.getElementById("submit-civil-btn").addEventListener("click", submitCivilForm);
+        document.getElementById("change-chief-btn").addEventListener("click", changeChiefName);
+        document.getElementById("dc-status-select").addEventListener("change", changeDcStatus);
+        document.getElementById("create-post-btn").addEventListener("click", createPost);
+        document.getElementById("create-wanted-btn").addEventListener("click", createWanted);
+        document.getElementById("add-evidence-btn").addEventListener("click", addEvidence);
+
+        document.getElementById("chat-msg").addEventListener("keydown", (e) => {
+            if(e.key === "Enter") sendChatMessage();
+        });
+
+        // Запуск сети
         loadNetworkData();
         loadChatMessages();
-        // Быстрая проверка сети каждые 2.5 секунды для мгновенного обновления у всех игроков
-        setInterval(loadNetworkData, 2500);
+        setInterval(loadNetworkData, 3000);
         setInterval(loadChatMessages, 2000);
-    };
+    });
 
+    // СЕТЕВАЯ ЛОГИКА (БЕЗ JQUERY)
     function loadNetworkData() {
-        $.get(`https://dweet.cc{NETWORK_CHANNEL}`, function(res) {
-            if(res && res.with && res.with[0] && res.with[0].content) {
-                const serverData = res.with[0].content;
-                if(serverData.civils) localDB.civils = serverData.civils;
-                if(serverData.news) localDB.news = serverData.news;
-                if(serverData.wanted) localDB.wanted = serverData.wanted;
-                if(serverData.evidence) localDB.evidence = serverData.evidence;
-                if(serverData.chief) localDB.chief = serverData.chief;
-                if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
-            }
-            renderAll();
-        }).fail(function() { renderAll(); });
+        fetch(`https://dweet.cc{NETWORK_CHANNEL}`)
+            .then(res => res.json())
+            .then(res => {
+                if(res && res.with && res.with.content) {
+                    const serverData = res.with.content;
+                    if(serverData.civils) localDB.civils = serverData.civils;
+                    if(serverData.news) localDB.news = serverData.news;
+                    if(serverData.wanted) localDB.wanted = serverData.wanted;
+                    if(serverData.evidence) localDB.evidence = serverData.evidence;
+                    if(serverData.chief) localDB.chief = serverData.chief;
+                    if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
+                }
+                renderAll();
+            }).catch(() => renderAll());
     }
 
     function saveNetworkData() {
-        $.post(`https://dweet.cc{NETWORK_CHANNEL}`, localDB);
+        fetch(`https://dweet.cc{NETWORK_CHANNEL}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(localDB)
+        });
     }
 
     function loadChatMessages() {
-        $.get(`https://dweet.cc{CHAT_CHANNEL}`, function(res) {
-            if(res && res.with && res.with[0] && res.with[0].content && res.with[0].content.messages) {
-                chatHistory = res.with[0].content.messages;
-                renderChat();
-            }
-        });
+        fetch(`https://dweet.cc{CHAT_CHANNEL}`)
+            .then(res => res.json())
+            .then(res => {
+                if(res && res.with && res.with.content && res.with.content.messages) {
+                    chatHistory = res.with.content.messages;
+                    renderChat();
+                }
+            });
     }
 
     function sendChatMessage() {
@@ -377,8 +462,12 @@
         chatHistory.push({sender, text, time});
         if(chatHistory.length > 25) chatHistory.shift();
 
-        $.post(`https://dweet.cc{CHAT_CHANNEL}`, {messages: chatHistory}, function() {
-            if(msgInput) msgInput.value = '';
+        fetch(`https://dweet.cc{CHAT_CHANNEL}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({messages: chatHistory})
+        }).then(() => {
+            msgInput.value = '';
             renderChat();
         });
     }
@@ -393,6 +482,7 @@
         });
         box.scrollTop = box.scrollHeight;
     }
+
     function renderAll() {
         document.getElementById('display-chief').innerText = localDB.chief;
         const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
@@ -402,7 +492,7 @@
             feed.innerHTML = localDB.news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Игровые пресс-релизы отсутствуют.</p>' : '';
             localDB.news.forEach((item, idx) => {
                 feed.innerHTML += `<div class="card">
-                    ${canEdit ? `<button onclick="deleteItem('news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
+                    ${canEdit ? `<button class="btn-danger delete-btn" style="display:block;" onclick="globalDelete('news', ${idx})">Удалить</button>` : ''}
                     <h3>${item.title}</h3>
                     <p><small>Игровая дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
                     <p>${item.text}</p>
@@ -415,7 +505,7 @@
             civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Заявлений от игроков не зарегистрировано.</p>' : '';
             localDB.civils.forEach((item, idx) => {
                 civFeed.innerHTML += `<div class="card alert-card">
-                    ${canEdit ? `<button onclick="deleteItem('civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
+                    ${canEdit ? `<button class="btn-danger delete-btn" style="display:block;" onclick="globalDelete('civils', ${idx})">Архивировать</button>` : ''}
                     <h3>${item.type} (Игрок: ${item.fio})</h3>
                     <p><strong>Связь:</strong> ${item.contact}</p>
                     <p>${item.text}</p>
@@ -429,7 +519,7 @@
         if (wantedList) {
             wantedList.innerHTML = '';
             localDB.wanted.forEach((item, idx) => {
-                wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('wanted', ${idx})">❌</span>` : ''}</div></li>`;
+                wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="globalDelete('wanted', ${idx})">❌</span>` : ''}</div></li>`;
             });
         }
 
@@ -438,7 +528,7 @@
             evFeed.innerHTML = localDB.evidence.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Следственные дела отсутствуют.</p>' : '';
             localDB.evidence.forEach((item, idx) => {
                 evFeed.innerHTML += `<div class="card case-card">
-                    ${canEdit ? `<button onclick="deleteItem('evidence', ${idx})" class="btn-danger delete-btn" style="display:block;">Стереть</button>` : ''}
+                    ${canEdit ? `<button class="btn-danger delete-btn" style="display:block;" onclick="globalDelete('evidence', ${idx})">Стереть</button>` : ''}
                     <h3>Материалы: ${item.case}</h3>
                     <p><small>Следователь: <strong>${item.by}</strong></small></p>
                     <p>${item.desc}</p>
@@ -498,7 +588,7 @@
         document.getElementById('civ-contact').value = '';
         document.getElementById('civ-text').value = '';
         document.getElementById('civ-proof').value = '';
-        alert('Рапорт / Обращение успешно направлено дежурному УСБ!');
+        alert('Рапорт успешно направлен дежурному УСБ!');
     }
 
     function changeChiefName() {
@@ -520,18 +610,17 @@
         const text = document.getElementById('post-text').value.trim();
         if(!title || !text) return alert('Заполните заголовок и текст пресс-релиза!');
 
-        const authorSignature = `${activeUser.username}`;
         localDB.news.unshift({
             title: title,
             text: text,
-            author: authorSignature,
+            author: activeUser.username,
             date: new Date().toLocaleDateString()
         });
         saveNetworkData();
 
         document.getElementById('post-title').value = '';
         document.getElementById('post-text').value = '';
-        alert('Официальный пресс-релиз выпущен глобально для всех игроков!');
+        alert('Официальный пресс-релиз выпущен глобально!');
     }
 
     function createWanted() {
@@ -545,7 +634,21 @@
         alert('Подозреваемый успешно внесен в Федеральный Розыск МВД!');
     }
 
-    function deleteItem(dbKey, index) {
+    function addEvidence() {
+        const caseName = document.getElementById('ev-case').value.trim();
+        const status = document.getElementById('ev-status').value;
+        const desc = document.getElementById('ev-desc').value.trim();
+        if(!caseName || !desc) return alert('Заполните данные дела!');
+
+        localDB.evidence.unshift({case: caseName, status, desc, by: activeUser.username});
+        saveNetworkData();
+
+        document.getElementById('ev-case').value = '';
+        document.getElementById('ev-desc').value = '';
+        alert('Следственное дело запечатано и внесено в реестр!');
+    }
+
+    function globalDelete(dbKey, index) {
         if(!confirm('Вы действительно хотите удалить эту запись?')) return;
         localDB[dbKey].splice(index, 1);
         saveNetworkData();
@@ -557,33 +660,6 @@
         if(!dot || !text) return;
         if(status === 'open') { dot.style.backgroundColor = 'var(--success-green)'; text.innerText = 'Прием обращений [ИГРА]'; }
         else { dot.style.backgroundColor = 'var(--alert-red)'; text.innerText = 'Режим ограничений [ФРАКЦИЯ]'; }
-    }
-
-    function addEvidence() {
-        const caseName = document.getElementById('ev-case').value.trim();
-        const status = document.getElementById('ev-status').value;
-        const desc = document.getElementById('ev-desc').value.trim();
-        if(!caseName || !desc) return alert('Заполните данные дела!');
-
-        const authorSignature = `${activeUser.username}`;
-        localDB.evidence.unshift({case: caseName, status, desc, by: authorSignature});
-        saveNetworkData();
-
-        document.getElementById('ev-case').value = '';
-        document.getElementById('ev-desc').value = '';
-        alert('Следственное дело запечатано и внесено в реестр!');
-    }
-
-    function switchTab(tabId, btn) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        btn.classList.add('active');
-    }
-
-    function toggleLaws() {
-        const panel = document.getElementById('laws-panel');
-        panel.style.display = panel.style.display === 'grid' ? 'none' : 'grid';
     }
 </script>
 </body>
