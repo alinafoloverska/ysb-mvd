@@ -340,8 +340,9 @@
     };
 
     // Функция загрузки данных из интернета
+    // Функция загрузки данных из интернета (Исправлено на dweet.cc)
     function loadNetworkData() {
-        $.get(`https://dweet.io{NETWORK_CHANNEL}`, function(res) {
+        $.get(`https://dweet.cc{NETWORK_CHANNEL}`, function(res) {
             if(res && res.with && res.with[0] && res.with[0].content) {
                 const serverData = res.with[0].content;
                 if(serverData.civils) localDB.civils = serverData.civils;
@@ -352,6 +353,63 @@
                 if(serverData.dc_status) localDB.dc_status = serverData.dc_status;
             }
             renderAll();
+        });
+    }
+
+    // Отправка обновлений на рабочий сервер dweet.cc
+    function saveNetworkData() {
+        $.post(`https://dweet.cc{NETWORK_CHANNEL}`, localDB);
+    }
+
+    function renderAll() {
+        document.getElementById('display-chief').innerText = localDB.chief;
+        const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
+
+        const feed = document.getElementById('news-feed');
+        if (feed) {
+            feed.innerHTML = localDB.news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Игровые пресс-релизы отсутствуют.</p>' : '';
+            localDB.news.forEach((item, idx) => {
+                feed.innerHTML += `<div class="card">
+                    ${canEdit ? `<button onclick="deleteItem('news', ${idx})" class="btn-danger delete-btn" style="display:block;">Удалить</button>` : ''}
+                    <h3>${item.title} [ВНУТРИИГРОВАЯ СВОДКА]</h3>
+                    <p><small>Игровая дата: ${item.date} | <strong>Подпись: ${item.author}</strong></small></p>
+                    <p>${item.text}</p>
+                </div>`;
+            });
+        }
+
+        const civFeed = document.getElementById('civils-feed');
+        if (civFeed) {
+            civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Жалоб и рапортов от игроков не зарегистрировано.</p>' : '';
+            localDB.civils.forEach((item, idx) => {
+                civFeed.innerHTML += `<div class="card alert-card">
+                    ${canEdit ? `<button onclick="deleteItem('civils', ${idx})" class="btn-danger delete-btn" style="display:block;">Архивировать</button>` : ''}
+                    <h3>${item.type} (Игрок: ${item.fio})</h3>
+                    <p><strong>Связь:</strong> ${item.contact}</p>
+                    <p>${item.text}</p>
+                    ${item.proof ? `<p><a href="${item.proof}" target="_blank" style="color:var(--accent-cyan); font-weight:bold;">🔗 Доказательства</a></p>`:''}
+                    <span class="badge blue">RP-Статус: На рассмотрении руководства</span>
+                </div>`;
+            });
+        }
+
+        const wantedList = document.getElementById('wanted-list');
+        if (wantedList) {
+            wantedList.innerHTML = '';
+            localDB.wanted.forEach((item, idx) => {
+                wantedList.innerHTML += `<li><span>${item.name}</span> <div><span class="badge red" style="margin-right:5px;">${item.reason}</span>${canEdit ? `<span style="color:var(--alert-red); cursor:pointer; font-weight:bold;" onclick="deleteItem('wanted', ${idx})">❌</span>` : ''}</div></li>`;
+            });
+        }
+
+        const policeList = document.getElementById('police-list');
+        if (policeList) {
+            policeList.innerHTML = '';
+            localDB.users.forEach((u) => {
+                policeList.innerHTML += `<li><span>Офицер: ${u.username}</span> <div><span class="badge blue">${u.rank}</span></div></li>`;
+            });
+        }
+    }
+
         });
     }
 
