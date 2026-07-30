@@ -1,4 +1,85 @@
-        /* Сверкающие 3D спецсигналы */
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>УСБ ГУ МВД России по г. Санкт-Петербургу и ЛО [PROVINCE / ROBLOX RP]</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
+            --panel-bg: rgba(10, 17, 40, 0.9);
+            --accent-color: #0074d9;
+            --mvd-gold: #f2c94c;
+            --alert-red: #d9534f;
+            --success-green: #2ecc71;
+            --text-light: #f4f5f7;
+            --text-muted: #a0aec0;
+        }
+
+        body.theme-blue {
+            --bg-gradient: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
+            --panel-bg: rgba(10, 17, 40, 0.9);
+            --accent-color: #0074d9;
+        }
+        body.theme-purple {
+            --bg-gradient: linear-gradient(135deg, #0f051d 0%, #180a2b 50%, #2c104e 100%);
+            --panel-bg: rgba(24, 10, 43, 0.9);
+            --accent-color: #a855f7;
+        }
+        body.theme-black {
+            --bg-gradient: linear-gradient(135deg, #020205 0%, #0a0a0f 50%, #14141a 100%);
+            --panel-bg: rgba(15, 15, 20, 0.95);
+            --accent-color: #475569;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-light);
+            margin: 0; padding: 0;
+            overflow-x: hidden;
+            transition: background 0.4s ease;
+        }
+
+        .police-highway {
+            width: 100%; height: 60px; background: #070a14;
+            border-bottom: 3px solid var(--accent-color);
+            position: relative; overflow: hidden;
+            display: flex; align-items: center;
+            transition: border-color 0.4s ease;
+        }
+        .road-line {
+            width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.15);
+            position: absolute; top: 32px; z-index: 1;
+        }
+        
+        .animated-cop-car {
+            width: 90px; height: 32px; position: absolute; z-index: 3;
+            left: -350px; animation: patrolDrive 14s linear infinite;
+            transform: perspective(300px) rotateX(10deg) rotateY(-18deg) rotateZ(2deg);
+            transform-style: preserve-3d;
+        }
+        
+        .car-body {
+            width: 100%; height: 100%; background: #ffffff;
+            border-radius: 4px; position: relative;
+            box-shadow: inset -15px -5px 15px rgba(0,0,0,0.3), 0 10px 20px rgba(0,0,0,0.6);
+            border-bottom: 4px solid #111;
+        }
+        .car-body::before {
+            content: ''; position: absolute; top: 0; left: 0;
+            width: 42px; height: 100%; background: #004499;
+            border-top-left-radius: 4px; border-bottom-left-radius: 4px;
+            box-shadow: inset 4px 4px 8px rgba(255,255,255,0.2);
+        }
+        .car-body::after {
+            content: ''; position: absolute; top: -6px; left: 25px;
+            width: 40px; height: 10px; background: #eee;
+            transform: perspective(100px) rotateX(25deg);
+            border-radius: 2px; border: 1px solid #ccc;
+            box-shadow: inset 0 5px 5px rgba(0,0,0,0.1);
+        }
         .siren-lights {
             position: absolute; top: -11px; left: 42px;
             width: 16px; height: 6px; border-radius: 2px;
@@ -10,7 +91,6 @@
             border: 2px solid #555; box-shadow: 54px 0 #111, 54px 0 0 2px #555;
         }
 
-        /* МНОЖЕСТВЕННЫЙ СВЕТЯЩИЙСЯ НЕОНОВЫЙ ХВОСТ ИЗ ТЕКСТА */
         .car-trail-text {
             position: absolute; left: -220px; top: 10px;
             font-size: 11px; font-weight: 900; letter-spacing: 2px;
@@ -91,6 +171,7 @@
         .law-card { background: #070d1f; border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; text-align: center; font-size: 12px; }
         .law-card a { color: var(--mvd-gold); text-decoration: none; font-weight: bold; display: block; margin-top: 6px; }
 
+        /* ИСПРАВЛЕНИЕ НАЛОЖЕНИЯ: СТРОГОЕ СКРЫТИЕ ВКЛАДОК */
         .tab-content { display: none !important; }
         .tab-content.active { display: block !important; }
 
@@ -128,14 +209,12 @@
 </head>
 <body class="theme-blue">
 
-    <!-- ТРЕК С ОБЪЕМНОЙ 3D ПОЛИЦЕЙСКОЙ МАШИНОЙ И ДЛИННЫМ ХВОСТОМ -->
 <div class="police-highway">
     <div class="road-line"></div>
     <div class="animated-cop-car">
         <div class="siren-lights"></div>
         <div class="car-body"></div>
         <div class="car-wheels"></div>
-        <!-- Длинный неоновый шлейф хэштегов за машиной -->
         <div class="car-trail-text">#СлаваЗакону #УСБ #МВД #78 #ЗаконИПорядок</div>
     </div>
 </div>
@@ -157,7 +236,6 @@
     <button class="nav-btn" id="btn-evidence">📁 Дела и Улики (Для сотрудников)</button>
     <button class="nav-btn" id="btn-laws">📚 Нормативно-правовая база</button>
     
-    <!-- ИНТЕРАКТИВНЫЙ ВЫБОР ДИЗАЙНА САЙТА -->
     <select class="theme-select-block" id="theme-changer">
         <option value="theme-blue">👮‍♂️ Строгий Синий</option>
         <option value="theme-purple">🔮 Неоновый Фиолетовый</option>
@@ -188,7 +266,7 @@
             </div>
         </div>
 
-                <div id="tab-civilians" class="tab-content">
+        <div id="tab-civilians" class="tab-content">
             <div class="panel" style="margin-bottom: 20px;">
                 <h2>Форма подачи заявления / рапорта фракции</h2>
                 <select id="civ-type">
@@ -204,7 +282,6 @@
                 <button id="submit-civil-btn">Направить обращение в ведомство</button>
             </div>
             
-            <!-- РЕЕСТР ЗАКРЫТ ДЛЯ ОБЫЧНЫХ ГРАЖДАНСКИХ ИГРОКОВ -->
             <div class="panel" id="civils-panel-block" style="display: none !important;">
                 <h2>Реестр зарегистрированных обращений граждан [СЕКРЕТНО]</h2>
                 <div id="civils-feed"></div>
@@ -234,7 +311,7 @@
         </div>
     </div>
 
-        <div class="sidebar">
+    <div class="sidebar">
         <div class="panel">
             <h2>Дежурная Часть / Доступ</h2>
             <div class="auth-status" id="auth-status-text">Статус доступа: Гражданское лицо</div>
@@ -246,7 +323,6 @@
             <button id="logout-btn" class="btn-danger" style="display:none;">Завершить дежурство (Выход)</button>
         </div>
 
-        <!-- СИТУАЦИОННЫЙ ЦЕНТР СЛУЖЕБНОГО ДОСТУПА ПОЛКОВНИКА -->
         <div class="panel hidden-panel" id="chief-panel" style="display: none;">
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
             <h4>Управление режимом Дежурной Части</h4>
@@ -267,7 +343,6 @@
             <button class="btn-danger" id="create-wanted-btn">Объявить в розыск</button>
         </div>
 
-        <!-- СЛУЖЕБНАЯ ОНЛАЙН-РАЦИЯ -->
         <div class="panel">
             <h2>📻 Служебная рация УСБ [ОНЛАЙН]</h2>
             <div id="chat-box" style="height: 180px; overflow-y: auto; background: #050a18; padding: 10px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
@@ -284,11 +359,10 @@
     </div>
 </div>
 
-<!-- ПОДКЛЮЧЕНИЕ СЕРВЕРОВ GOOGLE FIREBASE -->
 <script src="https://gstatic.com"></script>
 <script src="https://gstatic.com"></script>
 
-    <script>
+<script>
     // ТВОИ НАСТОЯЩИЕ ПРОВЕРЕННЫЕ КЛЮЧИ СВЯЗИ С СЕРВЕРОМ GOOGLE
     const firebaseConfig = {
         apiKey: "AIzaSyAZRGemTe5m4GMyruvDLl3Jlndpjkb9MT4",
@@ -301,7 +375,6 @@
         databaseURL: "https://firebaseio.com"
     };
 
-    // Инициализация защищенного сетевого буфера
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
@@ -314,7 +387,6 @@
 
     // ОБРАБОТЧИК ИНТЕРФЕЙСА (Чистый Vanilla JS без JQuery конфликтов)
     document.addEventListener("DOMContentLoaded", () => {
-        // Переключатель дизайнов сайта фракции
         const themeChanger = document.getElementById("theme-changer");
         if(themeChanger) {
             themeChanger.addEventListener("change", (e) => {
@@ -328,7 +400,6 @@
             }
         }
 
-        // Кнопки навигации по вкладкам портала УСБ
         const tabButtons = {
             'btn-press': 'tab-press',
             'btn-civilians': 'tab-civilians',
@@ -347,7 +418,6 @@
             }
         });
 
-        // Кнопка ФЗ и нормативно-правовой базы
         const btnLaws = document.getElementById("btn-laws");
         if(btnLaws) {
             btnLaws.addEventListener("click", () => {
@@ -356,7 +426,6 @@
             });
         }
 
-        // Регистрация кликов на кнопки управления формами
         document.getElementById("login-submit-btn").addEventListener("click", login);
         document.getElementById("logout-btn").addEventListener("click", logout);
         document.getElementById("submit-civil-btn").addEventListener("click", submitCivilForm);
@@ -373,7 +442,6 @@
             });
         }
 
-        // ЖИВЫЕ СЛУШАТЕЛИ СЕРВЕРА GOOGLE FIREBASE
         db.ref('chief').on('value', (snapshot) => {
             localDB.chief = snapshot.val() || 'Полковник УСБ Игнатьева А.Е.';
             document.getElementById('display-chief').innerText = localDB.chief;
@@ -391,7 +459,7 @@
         db.ref('messages').on('value', (snapshot) => { renderChat(snapshot.val()); });
     });
 
-            function renderNews(data) {
+    function renderNews(data) {
         const feed = document.getElementById('news-feed');
         if (!feed) return;
         feed.innerHTML = '';
@@ -496,114 +564,105 @@
             document.getElementById('logout-btn').style.display = 'block';
             document.getElementById('chief-panel').style.display = 'block';
             document.getElementById('evidence-locked-msg').style.display = 'none';
+
+    <script>
+        // Продолжение функции login (закрытие ветки условного оператора)
             document.getElementById('evidence-content').style.display = 'block';
             document.getElementById('auth-status-text').innerText = `ДОСТУП: РУКОВОДСТВО [${user.username}]`;
             document.getElementById('auth-status-text').style.color = 'var(--alert-red)';
             db.ref('news').once('value', snapshot => renderNews(snapshot.val()));
             db.ref('civils').once('value', snapshot => renderCivils(snapshot.val()));
-            alert(`Вход выполнен успешно, товарищ Полковник!`);
+            alert('Вход выполнен успешно, товарищ Полковник!');
         } else {
             alert('ОТКАЗ В ДОСТУПЕ! Проверьте служебный логин или пароль.');
         }
-    }
-
-    function logout() {
-        activeUser = null;
-        document.getElementById('login-form').style.display = 'block';
-        document.getElementById('logout-btn').style.display = 'none';
-        document.getElementById('chief-panel').style.display = 'none';
-        document.getElementById('auth-status-text').innerText = 'Статус доступа: Гражданское лицо';
-        document.getElementById('auth-status-text').style.color = 'var(--text-muted)';
-        document.getElementById('evidence-locked-msg').style.display = 'block';
-        document.getElementById('evidence-content').style.display = 'none';
-        db.ref('civils').once('value', snapshot => renderCivils(snapshot.val()));
-    }
-
-    function submitCivilForm() {
-        const type = document.getElementById('civ-type').value;
-        const fio = document.getElementById('civ-fio').value.trim();
-        const contact = document.getElementById('civ-contact').value.trim();
-        const text = document.getElementById('civ-text').value.trim();
-        const proof = document.getElementById('civ-proof').value.trim();
-
-        if(!fio || !text || !contact) return alert('Пожалуйста, заполните форму рапорта полностью!');
-
-        db.ref('civils').push({type, fio, contact, text, proof});
-
-        document.getElementById('civ-fio').value = '';
-        document.getElementById('civ-contact').value = '';
-        document.getElementById('civ-text').value = '';
-        document.getElementById('civ-proof').value = '';
-        alert('Рапорт успешно направлен в базу Google Firebase!');
-    }
-
-    function changeChiefName() {
-        const name = document.getElementById('new-chief-name').value.trim();
-        if(!name) return;
-        db.ref('chief').set(name);
-        document.getElementById('new-chief-name').value = '';
-        alert('Данные руководителя фракции обновлены.');
-    }
-
-    function changeDcStatus() {
-        const val = document.getElementById('dc-status-select').value;
-        db.ref('dc_status').set(val);
-    }
-
-    function createPost() {
-        const title = document.getElementById('post-title').value.trim();
-        const text = document.getElementById('post-text').value.trim();
-        if(!title || !text) return alert('Заполните заголовок и текст пресс-релиза!');
-
-        db.ref('news').push({
-            title: title,
-            text: text,
-            author: activeUser.username,
-            date: new Date().toLocaleDateString()
-        });
-
-        document.getElementById('post-title').value = '';
-        document.getElementById('post-text').value = '';
-        alert('Официальный пресс-релиз опубликован!');
-    }
-
-    function createWanted() {
-        const name = document.getElementById('wanted-name').value.trim();
-        const reason = document.getElementById('wanted-reason').value.trim();
-        if(!name || !reason) return alert('Заполните карточку розыска подозреваемого!');
         
-        db.ref('wanted').push({name, reason});
+        function logout() {
+            activeUser = null;
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('chief-panel').style.display = 'none';
+            document.getElementById('auth-status-text').innerText = 'Статус доступа: Гражданское лицо';
+            document.getElementById('auth-status-text').style.color = 'var(--text-muted)';
+            document.getElementById('evidence-locked-msg').style.display = 'block';
+            document.getElementById('evidence-content').style.display = 'none';
+            db.ref('civils').once('value', snapshot => renderCivils(snapshot.val()));
+        }
         
-        document.getElementById('wanted-name').value = '';
-        document.getElementById('wanted-reason').value = '';
-        alert('Подозреваемый внесен в Федеральный Розыск МВД!');
-    }
-
-    function addEvidence() {
-        const caseName = document.getElementById('ev-case').value.trim();
-        const status = document.getElementById('ev-status').value;
-        const desc = document.getElementById('ev-desc').value.trim();
-        if(!caseName || !desc) return alert('Заполните данные дела!');
-
-        db.ref('evidence').push({case: caseName, status, desc, by: activeUser.username});
-
-        document.getElementById('ev-case').value = '';
-        document.getElementById('ev-desc').value = '';
-        alert('Следственное дело запечатано в архив!');
-    }
-
-    function globalDelete(path, key) {
-        if(!confirm('Вы действительно хотите удалить эту запись из базы данных?')) return;
-        db.ref(path).child(key).remove();
-
-            <script>
+        function submitCivilForm() {
+            const type = document.getElementById('civ-type').value;
+            const fio = document.getElementById('civ-fio').value.trim();
+            const contact = document.getElementById('civ-contact').value.trim();
+            const text = document.getElementById('civ-text').value.trim();
+            const proof = document.getElementById('civ-proof').value.trim();
+            if(!fio || !text || !contact) return alert('Пожалуйста, заполните форму рапорта полностью!');
+            db.ref('civils').push({type, fio, contact, text, proof});
+            document.getElementById('civ-fio').value = '';
+            document.getElementById('civ-contact').value = '';
+            document.getElementById('civ-text').value = '';
+            document.getElementById('civ-proof').value = '';
+            alert('Рапорт успешно направлен в базу Google Firebase!');
+        }
+        
+        function changeChiefName() {
+            const name = document.getElementById('new-chief-name').value.trim();
+            if(!name) return;
+            db.ref('chief').set(name);
+            document.getElementById('new-chief-name').value = '';
+            alert('Данные руководителя фракции обновлены.');
+        }
+        
+        function changeDcStatus() {
+            const val = document.getElementById('dc-status-select').value;
+            db.ref('dc_status').set(val);
+        }
+        
+        function createPost() {
+            const title = document.getElementById('post-title').value.trim();
+            const text = document.getElementById('post-text').value.trim();
+            if(!title || !text) return alert('Заполните заголовок и текст пресс-релиза!');
+            db.ref('news').push({
+                title: title,
+                text: text,
+                author: activeUser.username,
+                date: new Date().toLocaleDateString()
+            });
+            document.getElementById('post-title').value = '';
+            document.getElementById('post-text').value = '';
+            alert('Официальный пресс-релиз опубликован!');
+        }
+        
+        function createWanted() {
+            const name = document.getElementById('wanted-name').value.trim();
+            const reason = document.getElementById('wanted-reason').value.trim();
+            if(!name || !reason) return alert('Заполните карточку розыска подозреваемого!');
+            db.ref('wanted').push({name, reason});
+            document.getElementById('wanted-name').value = '';
+            document.getElementById('wanted-reason').value = '';
+            alert('Подозреваемый внесен в Федеральный Розыск МВД!');
+        }
+        
+        function addEvidence() {
+            const caseName = document.getElementById('ev-case').value.trim();
+            const status = document.getElementById('ev-status').value;
+            const desc = document.getElementById('ev-desc').value.trim();
+            if(!caseName || !desc) return alert('Заполните данные дела!');
+            db.ref('evidence').push({case: caseName, status, desc, by: activeUser.username});
+            document.getElementById('ev-case').value = '';
+            document.getElementById('ev-desc').value = '';
+            alert('Следственное дело запечатано в архив!');
+        }
+        
+        function globalDelete(path, key) {
+            if(!confirm('Вы действительно хотите удалить эту запись из базы данных?')) return;
+            db.ref(path).child(key).remove();
+        }
+        
         function applyDcStatus(status) {
             const dot = document.getElementById('dc-status-dot');
             const text = document.getElementById('dc-status-text');
-            
-            if (!dot || !text) return;
-            
-            if (status === 'open') { 
+            if(!dot || !text) return;
+            if(status === 'open') { 
                 dot.style.backgroundColor = 'var(--success-green)'; 
                 text.innerText = 'Прием обращений [ИГРА]'; 
             } else { 
