@@ -42,57 +42,179 @@
             transition: background 0.4s ease;
         }
 
+        /* АНИМИРОВАННЫЙ ТРЕК С ОБЪЕМНОЙ 3D МАШИНОЙ И НЕОНОВЫМ СЛЕДОМ */
         .police-highway {
-            width: 100%; height: 45px; background: #111;
+            width: 100%; height: 50px; background: #0b0f19;
             border-bottom: 3px solid var(--accent-color);
             position: relative; overflow: hidden;
             display: flex; align-items: center;
             transition: border-color 0.4s ease;
         }
         .road-line {
-            width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.3);
-            position: absolute; top: 22px; z-index: 1;
+            width: 100%; height: 2px; border-top: 2px dashed rgba(255,255,255,0.2);
+            position: absolute; top: 25px; z-index: 1;
         }
+        
+        /* 3D ПОЛИЦЕЙСКИЙ ПАТРУЛЬ (ПЕРСПЕКТИВА И СТРУКТУРА) */
         .animated-cop-car {
-            width: 75px; height: 30px; background: #fff;
-            border-radius: 4px; position: absolute; z-index: 2;
-            left: -100px; animation: patrolDrive 14s linear infinite;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            border-bottom: 4px solid #000;
+            width: 85px; height: 28px; position: absolute; z-index: 3;
+            left: -120px; animation: patrolDrive 14s linear infinite;
+            transform: perspective(200px) rotateY(-15deg);
+            transform-style: preserve-3d;
         }
-        .animated-cop-car::before {
+        
+        .car-body {
+            width: 100%; height: 100%; background: #ffffff;
+            border-radius: 5px; position: relative;
+            box-shadow: inset -10px 0 15px rgba(0,0,0,0.2), 0 8px 15px rgba(0,0,0,0.6);
+            border-bottom: 4px solid #111;
+        }
+        .car-body::before {
             content: ''; position: absolute; top: 0; left: 0;
-            width: 35px; height: 100%; background: #1c3144;
-            border-top-left-radius: 4px; border-bottom-left-radius: 4px;
+            width: 38px; height: 100%; background: #004499;
+            border-top-left-radius: 5px; border-bottom-left-radius: 5px;
+            box-shadow: inset 5px 0 10px rgba(255,255,255,0.2);
         }
+
         .siren-lights {
-            position: absolute; top: -6px; left: 32px;
-            width: 12px; height: 6px; border-radius: 2px;
+            position: absolute; top: -7px; left: 40px;
+            width: 14px; height: 7px; border-radius: 3px;
             background: #ff3333; animation: flashingSiren 0.3s linear infinite alternate;
+            z-index: 4;
         }
         .car-wheels {
-            position: absolute; bottom: -3px; left: 8px; width: 10px; height: 10px; background: #222; border-radius: 50%;
-            box-shadow: 48px 0 #222;
+            position: absolute; bottom: -5px; left: 10px; width: 12px; height: 12px; background: #111; border-radius: 50%;
+            border: 2px solid #444; box-shadow: 52px 0 #111, 52px 0 0 2px #444;
+        }
+
+        /* ПЛАВНО ВСПЫХИВАЮЩИЙ И ТАЮЩИЙ ШЛЕЙФ #СЛАВАЗАКОНУ ЗА 3D-МАШИНОЙ */
+        .car-trail-text {
+            position: absolute; left: -90px; top: 8px;
+            font-size: 11px; font-weight: 900; letter-spacing: 1px;
+            color: #fff; text-shadow: 0 0 8px var(--accent-color), 0 0 15px var(--accent-color);
+            opacity: 0; animation: fadeTrail 0.4s linear infinite alternate;
+            white-space: nowrap; font-family: monospace; z-index: 2;
         }
 
         @keyframes patrolDrive {
-            0% { left: -100px; }
+            0% { left: -120px; }
             100% { left: 105%; }
         }
         @keyframes flashingSiren {
-            0% { background: #ff3333; box-shadow: -15px 0 20px #ff3333, 15px 0 20px #3333ff; }
-            100% { background: #3333ff; box-shadow: -15px 0 20px #3333ff, 15px 0 20px #ff3333; }
+            0% { background: #ff3333; box-shadow: -20px 0 25px #ff3333, 20px 0 25px #3333ff; }
+            100% { background: #3333ff; box-shadow: -20px 0 25px #3333ff, 20px 0 25px #ff3333; }
         }
+        @keyframes fadeTrail {
+            0% { opacity: 0.4; transform: translateX(-3px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        header {
+            background: linear-gradient(180deg, rgba(5, 10, 24, 0.95) 0%, rgba(10, 17, 40, 0.85) 100%);
+            border-bottom: 3px solid var(--mvd-gold);
+            padding: 30px 20px; text-align: center; position: relative;
+            backdrop-filter: blur(10px);
+        }
+        .mvd-logo {
+            width: 85px; height: auto; margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(242, 201, 76, 0.3));
+        }
+        header h1 { margin: 5px 0; font-size: 25px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; color: #fff; }
+        header p { margin: 5px 0; color: var(--text-muted); font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+        
+        .chief-badge {
+            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--mvd-gold);
+            display: inline-block; padding: 8px 22px; border-radius: 4px; margin-top: 15px; font-size: 13px; color: var(--mvd-gold); font-weight: bold;
+        }
+
+        .status-ticker {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--success-green);
+            padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .status-dot { width: 8px; height: 8px; background: var(--success-green); border-radius: 50%; }
+
+        nav {
+            background: #070d1f; padding: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .nav-btn {
+            background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);
+            padding: 9px 20px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; text-transform: uppercase; transition: all 0.2s ease;
+        }
+        .nav-btn:hover, .nav-btn.active { 
+            background: rgba(255,255,255,0.05); border-color: var(--accent-color); color: var(--text-light);
+        }
+
+        .theme-select-block {
+            background: #050a18; border: 1px solid var(--mvd-gold); color: var(--mvd-gold);
+            padding: 7px 12px; border-radius: 4px; font-size: 11px; font-weight: bold;
+            text-transform: uppercase; width: auto; max-width: 180px; cursor: pointer; margin: 0;
+        }
+
+        .container { display: flex; max-width: 1500px; margin: 25px auto; padding: 0 20px; gap: 25px; }
+        .main-content { flex: 2.5; display: flex; flex-direction: column; gap: 25px; }
+        .sidebar { flex: 1.1; display: flex; flex-direction: column; gap: 25px; }
+
+        .panel {
+            background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid var(--accent-color);
+            transition: background 0.4s ease, border-color 0.4s ease;
+        }
+        .panel h2 { margin-top: 0; font-size: 15px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; letter-spacing: 1px; font-weight: 700; color: #fff; }
+        
+        .laws-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+        .law-card { background: #070d1f; border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; text-align: center; font-size: 12px; }
+        .law-card a { color: var(--mvd-gold); text-decoration: none; font-weight: bold; display: block; margin-top: 6px; }
+
+        /* ИСПРАВЛЕНИЕ НАКАДКИ ВКЛАДОК: СТРОГОЕ СКРЫТИЕ ПО УМОЛЧАНИЮ */
+        .tab-content { display: none !important; }
+        .tab-content.active { display: block !important; }
+
+        .card {
+            background: #0e1730; border: 1px solid rgba(255,255,255,0.05);
+            border-left: 4px solid var(--accent-color); padding: 18px; border-radius: 4px; margin-bottom: 15px; position: relative;
+        }
+        .card.alert-card { border-left-color: var(--alert-red); background: rgba(217, 83, 79, 0.03); }
+        .card.case-card { border-left-color: #9b59b6; }
+
+        input, textarea, select, button {
+            width: 100%; padding: 11px; margin: 8px 0; box-sizing: border-box;
+            background: #050a18; border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 4px; font-size: 13px;
+        }
+        button { background: rgba(255,255,255,0.03); border: 1px solid var(--mvd-gold); color: var(--mvd-gold); font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
+        button:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
+        .btn-danger { background: rgba(217, 83, 79, 0.2); border-color: var(--alert-red); color: var(--alert-red); }
+        .btn-danger:hover { background: var(--alert-red); color: #fff; }
+
+        .auth-status { background: #050a18; padding: 10px; border-radius: 4px; text-align: center; font-size: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); font-weight: bold; }
+        .hidden-panel { display: none; }
+        .database-list { list-style: none; padding: 0; margin: 0; }
+        .database-list li { background: #050a18; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; border-radius: 4px; }
+        
+        .badge { padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
+        .badge.red { background: rgba(217,83,79,0.15); color: var(--alert-red); border: 1px solid var(--alert-red); }
+        .badge.green { background: rgba(46,204,113,0.15); color: var(--success-green); border: 1px solid var(--success-green); }
+        .badge.blue { background: rgba(0,116,217,0.15); color: #60a5fa; border: 1px solid var(--accent-color); }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .info-box { background: #070d1f; padding: 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+        .info-box h4 { margin: 0 0 5px 0; color: var(--mvd-gold); font-size: 13px; text-transform: uppercase; }
+        .info-box p { margin: 0; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
 <body class="theme-blue">
 
-<!-- ТРЕК С АНИМИРОВАННОЙ ПОЛИЦЕЙСКОЙ МАШИНОЙ -->
+<!-- ТРЕК С ОБЪЕМНОЙ 3D ПОЛИЦЕЙСКОЙ МАШИНОЙ И ШЛЕЙФОМ -->
 <div class="police-highway">
     <div class="road-line"></div>
     <div class="animated-cop-car">
         <div class="siren-lights"></div>
+        <div class="car-body"></div>
         <div class="car-wheels"></div>
+        <!-- Неоновый шлейф привязан прямо за корпусом машины -->
+        <div class="car-trail-text">#СлаваЗакону</div>
     </div>
 </div>
 
@@ -160,7 +282,7 @@
                 <button id="submit-civil-btn">Направить обращение в ведомство</button>
             </div>
             
-            <!-- РЕЕСТР ДЛЯ СЛУЖЕБНОГО ПОЛЬЗОВАНИЯ -->
+            <!-- РЕЕСТР ЗАКРЫТ ДЛЯ ОБЫЧНЫХ ГРАЖДАНСКИХ ИГРОКОВ -->
             <div class="panel" id="civils-panel-block" style="display: none;">
                 <h2>Реестр зарегистрированных обращений граждан [СЕКРЕТНО]</h2>
                 <div id="civils-feed"></div>
@@ -202,7 +324,7 @@
             <button id="logout-btn" class="btn-danger" style="display:none;">Завершить дежурство (Выход)</button>
         </div>
 
-        <!-- СИТУАЦИОННЫЙ ЦЕНТР СЛУЖЕБНОГО ДОСТУПА -->
+        <!-- СИТУАЦИОННЫЙ ЦЕНТР СЛУЖЕБНОГО ДОСТУПА ПОЛКОВНИКА -->
         <div class="panel hidden-panel" id="chief-panel" style="display: none;">
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
             <h4>Управление режимом Дежурной Части</h4>
@@ -220,7 +342,7 @@
             <h4>Внести в Федеральный Розыск</h4>
             <input type="text" id="wanted-name" placeholder="ФИО подозреваемого игрока">
             <input type="text" id="wanted-reason" placeholder="Статья УК РФ">
-            <button class="btn-danger" id="create-wanted-btn">Объявить в розыск</button>
+            <button class="btn-danger" id="create-wanted-btn">Объявить in розыск</button>
         </div>
 
         <!-- СЛУЖЕБНАЯ ОНЛАЙН-РАЦИЯ -->
@@ -239,6 +361,8 @@
         </div>
     </div>
 </div>
+
+<script src="https://cloudflare.com"></script>
 
 <script>
     // СВЕРХСТАБИЛЬНЫЙ ВАНИЛЬНЫЙ СКРИПТ (БЕЗ JQUERY КОНФЛИКТОВ)
@@ -285,9 +409,9 @@
             if(btnEl) {
                 btnEl.addEventListener("click", function() {
                     document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-                    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+                    document.querySelectorAll(".tab-content").forEach(t => t.style.setProperty('display', 'none', 'important'));
                     this.classList.add("active");
-                    document.getElementById(tabButtons[btnId]).classList.add("active");
+                    document.getElementById(tabButtons[btnId]).style.setProperty('display', 'block', 'important');
                 });
             }
         });
@@ -404,7 +528,7 @@
         // ЗАЩИТА ДАННЫХ: Блок реестра заявлений виден только Полковнику
         const civilsPanelBlock = document.getElementById('civils-panel-block');
         if(civilsPanelBlock) {
-            civilsPanelBlock.style.display = canEdit ? 'block' : 'none';
+            civilsPanelBlock.style.setProperty('display', canEdit ? 'block' : 'none', 'important');
         }
 
         const feed = document.getElementById('news-feed');
