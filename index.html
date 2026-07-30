@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>УСБ ГУ МВД России по г. Санкт-Петербургу и ЛО [PROVINCE / ROBLOX RP]</title>
     <style>
-        /* БАЗОВЫЕ НАСТРОЙКИ СТИЛЕЙ И ТЕМ ОФОРМЛЕНИЯ */
         :root {
             --bg-gradient: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
             --panel-bg: rgba(10, 17, 40, 0.9);
@@ -17,21 +16,16 @@
             --text-muted: #a0aec0;
         }
 
-        /* Синяя тема (По умолчанию) */
         body.theme-blue {
             --bg-gradient: linear-gradient(135deg, #050a18 0%, #0a1128 50%, #101f42 100%);
             --panel-bg: rgba(10, 17, 40, 0.9);
             --accent-color: #0074d9;
         }
-
-        /* Фиолетовая тема */
         body.theme-purple {
             --bg-gradient: linear-gradient(135deg, #0f051d 0%, #180a2b 50%, #2c104e 100%);
             --panel-bg: rgba(24, 10, 43, 0.9);
             --accent-color: #a855f7;
         }
-
-        /* Черная тема */
         body.theme-black {
             --bg-gradient: linear-gradient(135deg, #020205 0%, #0a0a0f 50%, #14141a 100%);
             --panel-bg: rgba(15, 15, 20, 0.95);
@@ -48,7 +42,6 @@
             transition: background 0.4s ease;
         }
 
-        /* АНИМИРОВАННЫЙ ТРЕК С ПОЛИЦЕЙСКОЙ МАШИНОЙ */
         .police-highway {
             width: 100%; height: 45px; background: #111;
             border-bottom: 3px solid var(--accent-color);
@@ -90,103 +83,10 @@
             0% { background: #ff3333; box-shadow: -15px 0 20px #ff3333, 15px 0 20px #3333ff; }
             100% { background: #3333ff; box-shadow: -15px 0 20px #3333ff, 15px 0 20px #ff3333; }
         }
-
-        header {
-            background: linear-gradient(180deg, rgba(5, 10, 24, 0.95) 0%, rgba(10, 17, 40, 0.85) 100%);
-            border-bottom: 3px solid var(--mvd-gold);
-            padding: 30px 20px; text-align: center; position: relative;
-            backdrop-filter: blur(10px);
-        }
-        .mvd-logo {
-            width: 85px; height: auto; margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px rgba(242, 201, 76, 0.3));
-        }
-        header h1 { margin: 5px 0; font-size: 25px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 800; color: #fff; }
-        header p { margin: 5px 0; color: var(--text-muted); font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-        
-        .chief-badge {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--mvd-gold);
-            display: inline-block; padding: 8px 22px; border-radius: 4px; margin-top: 15px; font-size: 13px; color: var(--mvd-gold); font-weight: bold;
-        }
-
-        .status-ticker {
-            position: absolute; top: 20px; right: 20px;
-            background: rgba(0,0,0,0.5); border: 1px solid var(--success-green);
-            padding: 6px 14px; border-radius: 4px; font-size: 11px; font-weight: bold;
-            display: flex; align-items: center; gap: 8px;
-        }
-        .status-dot { width: 8px; height: 8px; background: var(--success-green); border-radius: 50%; }
-
-        nav {
-            background: #070d1f; padding: 10px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .nav-btn {
-            background: transparent; border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);
-            padding: 9px 20px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: 700; text-transform: uppercase; transition: all 0.2s ease;
-        }
-        .nav-btn:hover, .nav-btn.active { 
-            background: rgba(255,255,255,0.05); border-color: var(--accent-color); color: var(--text-light);
-        }
-
-        /* Выпадающий список выбора дизайна */
-        .theme-select-block {
-            background: #050a18; border: 1px solid var(--mvd-gold); color: var(--mvd-gold);
-            padding: 7px 12px; border-radius: 4px; font-size: 11px; font-weight: bold;
-            text-transform: uppercase; width: auto; max-width: 180px; cursor: pointer; margin: 0;
-        }
-
-        .container { display: flex; max-width: 1500px; margin: 25px auto; padding: 0 20px; gap: 25px; }
-        .main-content { flex: 2.5; display: flex; flex-direction: column; gap: 25px; }
-        .sidebar { flex: 1.1; display: flex; flex-direction: column; gap: 25px; }
-
-        .panel {
-            background: var(--panel-bg); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 22px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-top: 3px solid var(--accent-color);
-            transition: background 0.4s ease, border-color 0.4s ease;
-        }
-        .panel h2 { margin-top: 0; font-size: 15px; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; letter-spacing: 1px; font-weight: 700; color: #fff; }
-        
-        .laws-grid { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-        .law-card { background: #070d1f; border: 1px solid rgba(255,255,255,0.05); padding: 15px; border-radius: 4px; text-align: center; font-size: 12px; }
-        .law-card a { color: var(--mvd-gold); text-decoration: none; font-weight: bold; display: block; margin-top: 6px; }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        .card {
-            background: #0e1730; border: 1px solid rgba(255,255,255,0.05);
-            border-left: 4px solid var(--accent-color); padding: 18px; border-radius: 4px; margin-bottom: 15px; position: relative;
-        }
-        .card.alert-card { border-left-color: var(--alert-red); background: rgba(217, 83, 79, 0.03); }
-        .card.case-card { border-left-color: #9b59b6; }
-
-        input, textarea, select, button {
-            width: 100%; padding: 11px; margin: 8px 0; box-sizing: border-box;
-            background: #050a18; border: 1px solid rgba(255,255,255,0.1); color: #fff; border-radius: 4px; font-size: 13px;
-        }
-        button { background: rgba(255,255,255,0.03); border: 1px solid var(--mvd-gold); color: var(--mvd-gold); font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        button:hover { background: var(--accent-color); color: #fff; border-color: var(--accent-color); }
-        .btn-danger { background: rgba(217, 83, 79, 0.2); border-color: var(--alert-red); color: var(--alert-red); }
-        .btn-danger:hover { background: var(--alert-red); color: #fff; }
-
-        .auth-status { background: #050a18; padding: 10px; border-radius: 4px; text-align: center; font-size: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); font-weight: bold; }
-        .hidden-panel { display: none; }
-        .database-list { list-style: none; padding: 0; margin: 0; }
-        .database-list li { background: #050a18; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 13px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; border-radius: 4px; }
-        
-        .badge { padding: 3px 8px; border-radius: 3px; font-size: 10px; font-weight: 700; text-transform: uppercase; }
-        .badge.red { background: rgba(217,83,79,0.15); color: var(--alert-red); border: 1px solid var(--alert-red); }
-        .badge.green { background: rgba(46,204,113,0.15); color: var(--success-green); border: 1px solid var(--success-green); }
-        .badge.blue { background: rgba(0,116,217,0.15); color: #60a5fa; border: 1px solid var(--accent-color); }
-
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-        .info-box { background: #070d1f; padding: 12px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
-        .info-box h4 { margin: 0 0 5px 0; color: var(--mvd-gold); font-size: 13px; text-transform: uppercase; }
-        .info-box p { margin: 0; font-size: 12px; color: var(--text-muted); }
     </style>
 </head>
-	
+<body class="theme-blue">
+
 <!-- ТРЕК С АНИМИРОВАННОЙ ПОЛИЦЕЙСКОЙ МАШИНОЙ -->
 <div class="police-highway">
     <div class="road-line"></div>
@@ -259,8 +159,10 @@
                 <input type="text" id="civ-proof" placeholder="Ссылка на материалы фиксации (YouTube / Imgur)">
                 <button id="submit-civil-btn">Направить обращение в ведомство</button>
             </div>
-            <div class="panel">
-                <h2>Реестр зарегистрированных обращений граждан</h2>
+            
+            <!-- РЕЕСТР ДЛЯ СЛУЖЕБНОГО ПОЛЬЗОВАНИЯ -->
+            <div class="panel" id="civils-panel-block" style="display: none;">
+                <h2>Реестр зарегистрированных обращений граждан [СЕКРЕТНО]</h2>
                 <div id="civils-feed"></div>
             </div>
         </div>
@@ -300,6 +202,7 @@
             <button id="logout-btn" class="btn-danger" style="display:none;">Завершить дежурство (Выход)</button>
         </div>
 
+        <!-- СИТУАЦИОННЫЙ ЦЕНТР СЛУЖЕБНОГО ДОСТУПА -->
         <div class="panel hidden-panel" id="chief-panel" style="display: none;">
             <h2 style="border-bottom-color: var(--alert-red);" id="admin-panel-title">Ситуационный Центр</h2>
             <h4>Управление режимом Дежурной Части</h4>
@@ -320,6 +223,7 @@
             <button class="btn-danger" id="create-wanted-btn">Объявить в розыск</button>
         </div>
 
+        <!-- СЛУЖЕБНАЯ ОНЛАЙН-РАЦИЯ -->
         <div class="panel">
             <h2>📻 Служебная рация УСБ [ОНЛАЙН]</h2>
             <div id="chat-box" style="height: 180px; overflow-y: auto; background: #050a18; padding: 10px; border-radius: 4px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;"></div>
@@ -336,9 +240,10 @@
     </div>
 </div>
 
-    // ЧИСТЫЙ JAVASCRIPT БЕЗ КОНФЛИКТНЫХ БИБЛИОТЕК
-    const NETWORK_CHANNEL = "usb_mvd_spb_clean_v1";
-    const CHAT_CHANNEL = "usb_mvd_spb_chat_clean_v1";
+<script>
+    // СВЕРХСТАБИЛЬНЫЙ ВАНИЛЬНЫЙ СКРИПТ (БЕЗ JQUERY КОНФЛИКТОВ)
+    const NETWORK_CHANNEL = "usb_mvd_spb_clean_v3_secured";
+    const CHAT_CHANNEL = "usb_mvd_spb_chat_clean_v3_secured";
 
     let activeUser = null;
     let localDB = {
@@ -352,23 +257,23 @@
     };
     let chatHistory = [];
 
-    // ОБРАБОТЧИК КНОПОК И НАВИГАЦИИ (Vanilla JS)
+    // ОБРАБОТЧИК ИНТЕРФЕЙСА (Vanilla JS)
     document.addEventListener("DOMContentLoaded", () => {
-        // Переключатель тем оформления
+        // Переключатель дизайнов
         const themeChanger = document.getElementById("theme-changer");
-        themeChanger.addEventListener("change", (e) => {
-            document.body.className = e.target.value;
-            localStorage.setItem("mvd-site-theme", e.target.value);
-        });
-        
-        // Загрузка сохранённой темы
-        const savedTheme = localStorage.getItem("mvd-site-theme");
-        if(savedTheme) {
-            document.body.className = savedTheme;
-            themeChanger.value = savedTheme;
+        if(themeChanger) {
+            themeChanger.addEventListener("change", (e) => {
+                document.body.className = e.target.value;
+                localStorage.setItem("mvd-site-theme", e.target.value);
+            });
+            const savedTheme = localStorage.getItem("mvd-site-theme");
+            if(savedTheme) {
+                document.body.className = savedTheme;
+                themeChanger.value = savedTheme;
+            }
         }
 
-        // Вкладки
+        // Кнопки навигации по вкладкам
         const tabButtons = {
             'btn-press': 'tab-press',
             'btn-civilians': 'tab-civilians',
@@ -376,21 +281,27 @@
         };
 
         Object.keys(tabButtons).forEach(btnId => {
-            document.getElementById(btnId).addEventListener("click", function() {
-                document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
-                document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
-                this.classList.add("active");
-                document.getElementById(tabButtons[btnId]).classList.add("active");
+            const btnEl = document.getElementById(btnId);
+            if(btnEl) {
+                btnEl.addEventListener("click", function() {
+                    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+                    this.classList.add("active");
+                    document.getElementById(tabButtons[btnId]).classList.add("active");
+                });
+            }
+        });
+
+        // Открытие нормативной базы
+        const btnLaws = document.getElementById("btn-laws");
+        if(btnLaws) {
+            btnLaws.addEventListener("click", () => {
+                const panel = document.getElementById("laws-panel");
+                panel.style.display = panel.style.display === "grid" ? "none" : "grid";
             });
-        });
+        }
 
-        // Нормативная база
-        document.getElementById("btn-laws").addEventListener("click", () => {
-            const panel = document.getElementById("laws-panel");
-            panel.style.display = panel.style.display === "grid" ? "none" : "grid";
-        });
-
-        // Слушатели кнопок форм
+        // Навешивание обработчиков на клики кнопок
         document.getElementById("login-submit-btn").addEventListener("click", login);
         document.getElementById("logout-btn").addEventListener("click", logout);
         document.getElementById("submit-civil-btn").addEventListener("click", submitCivilForm);
@@ -400,18 +311,21 @@
         document.getElementById("create-wanted-btn").addEventListener("click", createWanted);
         document.getElementById("add-evidence-btn").addEventListener("click", addEvidence);
 
-        document.getElementById("chat-msg").addEventListener("keydown", (e) => {
-            if(e.key === "Enter") sendChatMessage();
-        });
+        const chatMsgEl = document.getElementById("chat-msg");
+        if(chatMsgEl) {
+            chatMsgEl.addEventListener("keydown", (e) => {
+                if(e.key === "Enter") sendChatMessage();
+            });
+        }
 
-        // Запуск сети
+        // Старт сетевых потоков
         loadNetworkData();
         loadChatMessages();
         setInterval(loadNetworkData, 3000);
         setInterval(loadChatMessages, 2000);
     });
 
-    // СЕТЕВАЯ ЛОГИКА (БЕЗ JQUERY)
+    // СЕТЕВАЯ СИНХРОНИЗАЦИЯ FETCH
     function loadNetworkData() {
         fetch(`https://dweet.cc{NETWORK_CHANNEL}`)
             .then(res => res.json())
@@ -467,7 +381,7 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({messages: chatHistory})
         }).then(() => {
-            msgInput.value = '';
+            if(msgInput) msgInput.value = '';
             renderChat();
         });
     }
@@ -487,6 +401,12 @@
         document.getElementById('display-chief').innerText = localDB.chief;
         const canEdit = activeUser && (activeUser.role === 'chief' || activeUser.rank === 'Заместитель начальника Управления');
 
+        // ЗАЩИТА ДАННЫХ: Блок реестра заявлений виден только Полковнику
+        const civilsPanelBlock = document.getElementById('civils-panel-block');
+        if(civilsPanelBlock) {
+            civilsPanelBlock.style.display = canEdit ? 'block' : 'none';
+        }
+
         const feed = document.getElementById('news-feed');
         if (feed) {
             feed.innerHTML = localDB.news.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Игровые пресс-релизы отсутствуют.</p>' : '';
@@ -501,11 +421,11 @@
         }
 
         const civFeed = document.getElementById('civils-feed');
-        if (civFeed) {
+        if (civFeed && canEdit) { // Вывод заявлений строго для авторизованного руководства
             civFeed.innerHTML = localDB.civils.length === 0 ? '<p style="color:var(--text-muted); font-size:13px;">Заявлений от игроков не зарегистрировано.</p>' : '';
             localDB.civils.forEach((item, idx) => {
                 civFeed.innerHTML += `<div class="card alert-card">
-                    ${canEdit ? `<button class="btn-danger delete-btn" style="display:block;" onclick="globalDelete('civils', ${idx})">Архивировать</button>` : ''}
+                    <button class="btn-danger delete-btn" style="display:block;" onclick="globalDelete('civils', ${idx})">Архивировать</button>
                     <h3>${item.type} (Игрок: ${item.fio})</h3>
                     <p><strong>Связь:</strong> ${item.contact}</p>
                     <p>${item.text}</p>
@@ -556,7 +476,7 @@
             renderAll();
             alert(`Вход выполнен успешно, товарищ Полковник!`);
         } else {
-            alert('ОТКАЗ В ДОСТУПЕ! Проверьте игровой логин или пароль.');
+            alert('ОТКАЗ В ДОСТУПЕ! Проверьте служебный логин или пароль.');
         }
     }
 
